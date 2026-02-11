@@ -24,7 +24,7 @@ export default function Home() {
   const prev = () => setCurrent((c) => (c - 1 + slides.length) % slides.length);
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-6">
+    <main className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-6 text-center">
 
       {/* LOGO */}
       <Image
@@ -33,21 +33,32 @@ export default function Home() {
         width={220}
         height={80}
         priority
-        className="mb-10"
+        className="mb-8"
       />
+
+      {/* IDEA FUERZA */}
+      <h1 className="text-xl md:text-3xl font-semibold text-gray-800 max-w-4xl leading-snug mb-12">
+        <span className="text-blue-700 font-bold">
+          Desde la captación inteligente de alumnos
+        </span>
+        <br />
+        hasta el control total de la Formación Profesional para el Empleo,
+        <br />
+        en una sola plataforma.
+      </h1>
 
       {/* BOTONES */}
       <div className="flex gap-6 mb-16">
         <button
           onClick={() => setShowDemo(true)}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold shadow"
+          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold shadow-md transition"
         >
           Ver DEMO
         </button>
 
         <button
           onClick={() => setShowContact(true)}
-          className="bg-gray-900 hover:bg-black text-white px-6 py-3 rounded-lg font-semibold shadow"
+          className="bg-gray-900 hover:bg-black text-white px-6 py-3 rounded-lg font-semibold shadow-md transition"
         >
           Concertar cita
         </button>
@@ -115,11 +126,15 @@ export default function Home() {
               <input className="w-full border px-3 py-2 rounded" placeholder="Nombre" />
               <input className="w-full border px-3 py-2 rounded" placeholder="Teléfono" />
               <input className="w-full border px-3 py-2 rounded" placeholder="Email" />
-              <input className="w-full border px-5 py-5 rounded" placeholder="Observaciones" />
+              <textarea
+                className="w-full border px-3 py-2 rounded"
+                placeholder="Observaciones"
+                rows={3}
+              />
 
               <button
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded font-semibold"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded font-semibold transition"
               >
                 Enviar solicitud
               </button>
