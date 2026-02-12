@@ -1,12 +1,12 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY!);
 
 export async function POST(req: Request) {
   try {
     const { empresa, nombre, telefono, email, observaciones } = await req.json();
 
-    const data = await resend.emails.send({
+    await resend.emails.send({
       from: 'Coforma <admin@coforma.es>',
       to: ['admin@coforma.es'],
       subject: 'Nueva solicitud de contacto - Coforma',
@@ -20,8 +20,9 @@ export async function POST(req: Request) {
       `,
     });
 
-    return Response.json({ success: true, data });
+    return Response.json({ success: true });
   } catch (error) {
-    return Response.json({ success: false, error });
+    console.error('Error enviando email:', error);
+    return Response.json({ success: false });
   }
 }
