@@ -70,14 +70,15 @@ export default function Home() {
       />
 
       <h1 className="text-xl md:text-3xl font-semibold text-gray-800 max-w-4xl leading-snug mb-12">
-        <span className="text-blue-700 font-bold">
-          Desde la captación inteligente de alumnos
-        </span>
-        <br />
-        hasta el control total de la Formación Profesional para el Empleo,
-        <br />
-        en una sola plataforma.
-      </h1>
+  <span className="text-blue-700 font-bold">
+    Captación, seguimiento y gestión operativa
+  </span>
+  <br />
+  de la Formación Profesional para el Empleo para academias,
+  <br />
+  en una sola plataforma.
+</h1>
+
 
       <div className="flex gap-6 mb-16">
         <button
