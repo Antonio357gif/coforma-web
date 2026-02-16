@@ -1,7 +1,6 @@
 import { Resend } from 'resend';
 export const runtime = 'nodejs';
 
-
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
 export async function POST(req: Request) {
@@ -11,6 +10,7 @@ export async function POST(req: Request) {
     await resend.emails.send({
       from: 'Coforma <admin@coforma.es>',
       to: ['admin@coforma.es'],
+      replyTo: email,
       subject: 'Nueva solicitud de contacto - Coforma',
       html: `
         <h2>Nueva solicitud de contacto</h2>
