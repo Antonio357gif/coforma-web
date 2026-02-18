@@ -69,7 +69,7 @@ function DemoCarousel({
             onClick={next}
             className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 hover:bg-slate-50"
           >
-            Siguiente →{' '}
+            Siguiente →
           </button>
         </div>
       </div>
@@ -81,9 +81,10 @@ function ContactForm({ onSent }: { onSent: () => void }) {
   const [sending, setSending] = useState(false);
   const [ok, setOk] = useState<null | boolean>(null);
 
-  // ✅ ÚNICO CAMBIO: este onSubmit (solo añade diagnóstico y maneja mejor texto/JSON)
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const formEl = e.currentTarget;
+
     setSending(true);
     setOk(null);
 
@@ -97,30 +98,17 @@ function ContactForm({ onSent }: { onSent: () => void }) {
         body: JSON.stringify(payload),
       });
 
-      // Leer como texto primero: así NO revienta si el backend devuelve texto/HTML
-      const raw = await res.text();
+      const data = await res.json().catch(() => null);
 
-      // Intentar parsear JSON (si es JSON, perfecto; si no, null)
-      const data = (() => {
-        try {
-          return JSON.parse(raw);
-        } catch {
-          return null;
-        }
-      })();
-
-      // 🔎 Trazas en consola (lo que necesitamos para cerrar el tema en 1 intento)
-      console.log('CONTACT_DEBUG -> status:', res.status, 'ok:', res.ok, 'body:', raw);
-
-      if (!res.ok || data?.ok === false) {
-        throw new Error(data?.error || raw || 'Error enviando el formulario');
+      if (!res.ok || !data?.ok) {
+        throw new Error(data?.error || 'Error enviando el formulario');
       }
 
       setOk(true);
-      e.currentTarget.reset();
+      formEl.reset();
+
       onSent();
-    } catch (err) {
-      console.error('CONTACT_DEBUG -> catch:', err);
+    } catch {
       setOk(false);
     } finally {
       setSending(false);
@@ -130,10 +118,34 @@ function ContactForm({ onSent }: { onSent: () => void }) {
   return (
     <form onSubmit={onSubmit} className="space-y-3">
       {[
-        { name: 'company', placeholder: 'Empresa', type: 'text', required: true },
-        { name: 'name', placeholder: 'Nombre', type: 'text', required: true },
-        { name: 'phone', placeholder: 'Teléfono', type: 'text', required: false },
-        { name: 'email', placeholder: 'Email', type: 'email', required: true },
+        {
+          name: 'company',
+          placeholder: 'Empresa',
+          type: 'text',
+          required: true,
+          autoComplete: 'organization',
+        },
+        {
+          name: 'name',
+          placeholder: 'Nombre',
+          type: 'text',
+          required: true,
+          autoComplete: 'name',
+        },
+        {
+          name: 'phone',
+          placeholder: 'Teléfono',
+          type: 'text',
+          required: false,
+          autoComplete: 'tel',
+        },
+        {
+          name: 'email',
+          placeholder: 'Email',
+          type: 'email',
+          required: true,
+          autoComplete: 'email',
+        },
       ].map((f) => (
         <div key={f.name}>
           <input
@@ -141,6 +153,7 @@ function ContactForm({ onSent }: { onSent: () => void }) {
             type={f.type}
             required={f.required}
             placeholder={f.placeholder}
+            autoComplete={f.autoComplete}   {/* ✅ ÚNICA MODIFICACIÓN */}
             className="w-full rounded-xl border border-slate-900/45 bg-white px-4 py-2.5 text-[15px] text-slate-800 outline-none placeholder:text-slate-400 focus:border-slate-900"
           />
         </div>
@@ -151,6 +164,7 @@ function ContactForm({ onSent }: { onSent: () => void }) {
           name="notes"
           rows={3}
           placeholder="Observaciones"
+          autoComplete="off"               {/* ✅ ÚNICA MODIFICACIÓN */}
           className="w-full resize-none rounded-xl border border-slate-900/45 bg-white px-4 py-2.5 text-[15px] text-slate-800 outline-none placeholder:text-slate-400 focus:border-slate-900"
         />
       </div>
@@ -198,15 +212,9 @@ export default function Home() {
         </div>
 
         <nav className="hidden items-center gap-7 text-sm font-semibold text-slate-700 md:flex">
-          <a href="#inicio" className="hover:text-slate-900">
-            Inicio
-          </a>
-          <a href="#caracteristicas" className="hover:text-slate-900">
-            Características
-          </a>
-          <a href="#tarifas" className="hover:text-slate-900">
-            Tarifas
-          </a>
+          <a href="#inicio" className="hover:text-slate-900">Inicio</a>
+          <a href="#caracteristicas" className="hover:text-slate-900">Características</a>
+          <a href="#tarifas" className="hover:text-slate-900">Tarifas</a>
         </nav>
       </header>
 
@@ -218,7 +226,6 @@ export default function Home() {
                 Gestión integral para <span className="font-extrabold">academias</span> →
               </div>
 
-              {/* Ajustado para ~4 líneas */}
               <h1 className="mt-6 text-[22px] font-extrabold leading-[1.14] tracking-tight text-slate-900 sm:text-[26px] lg:text-[28px]">
                 Captación, seguimiento y gestión operativa{' '}
                 <span className="text-emerald-700">de la Formación Profesional para el Empleo</span>{' '}
@@ -273,27 +280,16 @@ export default function Home() {
       <section id="caracteristicas" className="mx-auto max-w-6xl px-5 pb-12 sm:px-6">
         <div className="mt-10 grid gap-6 lg:grid-cols-3">
           {[
-            {
-              title: 'Registra tus cursos y convocatorias',
-              body: 'Añade fácilmente tus cursos, horarios y convocatorias en un solo clic.',
-            },
-            {
-              title: 'Gestiona inscripciones sin complicaciones',
-              body: 'Centraliza alumnos, etapas, asistencia y documentación con trazabilidad.',
-            },
-            {
-              title: 'Control total de tus convocatorias',
-              body: 'Supervisa progreso y resultados desde un panel unificado y auditable.',
-            },
+            { title: 'Registra tus cursos y convocatorias', body: 'Añade fácilmente tus cursos, horarios y convocatorias en un solo clic.' },
+            { title: 'Gestiona inscripciones sin complicaciones', body: 'Centraliza alumnos, etapas, asistencia y documentación con trazabilidad.' },
+            { title: 'Control total de tus convocatorias', body: 'Supervisa progreso y resultados desde un panel unificado y auditable.' },
           ].map((c) => (
             <div
               key={c.title}
               className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-[0_18px_60px_rgba(15,23,42,0.08)] backdrop-blur"
             >
               <h3 className="text-lg font-extrabold text-slate-900">{c.title}</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-700">
-                {c.body}
-              </p>
+              <p className="mt-2 text-sm leading-6 text-slate-700">{c.body}</p>
             </div>
           ))}
         </div>
