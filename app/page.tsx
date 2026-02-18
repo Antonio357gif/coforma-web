@@ -69,7 +69,7 @@ function DemoCarousel({
             onClick={next}
             className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 hover:bg-slate-50"
           >
-            Siguiente →
+            Siguiente →{' '}
           </button>
         </div>
       </div>
@@ -81,6 +81,7 @@ function ContactForm({ onSent }: { onSent: () => void }) {
   const [sending, setSending] = useState(false);
   const [ok, setOk] = useState<null | boolean>(null);
 
+  // ✅ ÚNICO CAMBIO: este onSubmit (solo añade diagnóstico y maneja mejor texto/JSON)
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setSending(true);
@@ -96,17 +97,30 @@ function ContactForm({ onSent }: { onSent: () => void }) {
         body: JSON.stringify(payload),
       });
 
-      const data = await res.json().catch(() => null);
+      // Leer como texto primero: así NO revienta si el backend devuelve texto/HTML
+      const raw = await res.text();
 
-if (!res.ok || !data?.ok) {
-  throw new Error(data?.error || 'Error enviando el formulario');
-}
+      // Intentar parsear JSON (si es JSON, perfecto; si no, null)
+      const data = (() => {
+        try {
+          return JSON.parse(raw);
+        } catch {
+          return null;
+        }
+      })();
 
+      // 🔎 Trazas en consola (lo que necesitamos para cerrar el tema en 1 intento)
+      console.log('CONTACT_DEBUG -> status:', res.status, 'ok:', res.ok, 'body:', raw);
+
+      if (!res.ok || data?.ok === false) {
+        throw new Error(data?.error || raw || 'Error enviando el formulario');
+      }
 
       setOk(true);
       e.currentTarget.reset();
       onSent();
-    } catch {
+    } catch (err) {
+      console.error('CONTACT_DEBUG -> catch:', err);
       setOk(false);
     } finally {
       setSending(false);
@@ -169,8 +183,6 @@ export default function Home() {
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <div className="pointer-events-none fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(1200px_600px_at_50%_-10%,rgba(16,185,129,0.18),transparent_60%),radial-gradient(900px_500px_at_10%_20%,rgba(2,132,199,0.08),transparent_55%),radial-gradient(900px_500px_at_90%_25%,rgba(148,163,184,0.16),transparent_55%)]" />
-        
-
       </div>
 
       <header className="mx-auto flex max-w-6xl items-center justify-between px-5 py-5 sm:px-6">
@@ -186,9 +198,15 @@ export default function Home() {
         </div>
 
         <nav className="hidden items-center gap-7 text-sm font-semibold text-slate-700 md:flex">
-          <a href="#inicio" className="hover:text-slate-900">Inicio</a>
-          <a href="#caracteristicas" className="hover:text-slate-900">Características</a>
-          <a href="#tarifas" className="hover:text-slate-900">Tarifas</a>
+          <a href="#inicio" className="hover:text-slate-900">
+            Inicio
+          </a>
+          <a href="#caracteristicas" className="hover:text-slate-900">
+            Características
+          </a>
+          <a href="#tarifas" className="hover:text-slate-900">
+            Tarifas
+          </a>
         </nav>
       </header>
 
@@ -202,7 +220,6 @@ export default function Home() {
 
               {/* Ajustado para ~4 líneas */}
               <h1 className="mt-6 text-[22px] font-extrabold leading-[1.14] tracking-tight text-slate-900 sm:text-[26px] lg:text-[28px]">
-
                 Captación, seguimiento y gestión operativa{' '}
                 <span className="text-emerald-700">de la Formación Profesional para el Empleo</span>{' '}
                 para academias, <span className="text-slate-900">en una sola plataforma.</span>
@@ -256,16 +273,27 @@ export default function Home() {
       <section id="caracteristicas" className="mx-auto max-w-6xl px-5 pb-12 sm:px-6">
         <div className="mt-10 grid gap-6 lg:grid-cols-3">
           {[
-            { title: 'Registra tus cursos y convocatorias', body: 'Añade fácilmente tus cursos, horarios y convocatorias en un solo clic.' },
-            { title: 'Gestiona inscripciones sin complicaciones', body: 'Centraliza alumnos, etapas, asistencia y documentación con trazabilidad.' },
-            { title: 'Control total de tus convocatorias', body: 'Supervisa progreso y resultados desde un panel unificado y auditable.' },
+            {
+              title: 'Registra tus cursos y convocatorias',
+              body: 'Añade fácilmente tus cursos, horarios y convocatorias en un solo clic.',
+            },
+            {
+              title: 'Gestiona inscripciones sin complicaciones',
+              body: 'Centraliza alumnos, etapas, asistencia y documentación con trazabilidad.',
+            },
+            {
+              title: 'Control total de tus convocatorias',
+              body: 'Supervisa progreso y resultados desde un panel unificado y auditable.',
+            },
           ].map((c) => (
             <div
               key={c.title}
               className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-[0_18px_60px_rgba(15,23,42,0.08)] backdrop-blur"
             >
               <h3 className="text-lg font-extrabold text-slate-900">{c.title}</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-700">{c.body}</p>
+              <p className="mt-2 text-sm leading-6 text-slate-700">
+                {c.body}
+              </p>
             </div>
           ))}
         </div>
