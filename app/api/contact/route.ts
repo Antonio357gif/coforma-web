@@ -1,3 +1,4 @@
+import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
 export const runtime = "nodejs";
@@ -26,15 +27,15 @@ export async function POST(req: Request) {
     const notes = String(body.notes ?? "").trim();
 
     if (!email) {
-      return Response.json({ ok: false, error: "Missing email" }, { status: 400 });
+      return NextResponse.json({ ok: false, error: "Missing email" }, { status: 400 });
     }
 
     const resendKey = process.env.RESEND_API_KEY;
-    const from = process.env.RESEND_FROM_EMAIL;
+    const from = process.env.RESEND_FROM_EMAIL;   // admin@coforma.es
     const to = process.env.RESEND_TO_EMAIL || from;
 
     if (!resendKey || !from || !to) {
-      return Response.json(
+      return NextResponse.json(
         { ok: false, error: "Missing RESEND env vars" },
         { status: 500 }
       );
@@ -69,12 +70,13 @@ export async function POST(req: Request) {
       html,
     });
 
-    return Response.json({ ok: true }, { status: 200 });
+    return NextResponse.json({ ok: true }, { status: 200 });
   } catch (err) {
     console.error("CONTACT_API_ERROR", err);
-    return Response.json(
+    return NextResponse.json(
       { ok: false, error: "Error sending message" },
       { status: 500 }
     );
   }
 }
+
