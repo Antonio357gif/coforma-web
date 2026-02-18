@@ -19,7 +19,6 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    // Estas claves deben coincidir con el formulario (page.tsx)
     const company = String(body.company ?? "").trim();
     const name = String(body.name ?? "").trim();
     const phone = String(body.phone ?? "").trim();
@@ -27,15 +26,18 @@ export async function POST(req: Request) {
     const notes = String(body.notes ?? "").trim();
 
     if (!email) {
-      return new Response("Missing email", { status: 400 });
+      return Response.json({ ok: false, error: "Missing email" }, { status: 400 });
     }
 
     const resendKey = process.env.RESEND_API_KEY;
-    const from = process.env.RESEND_FROM_EMAIL; // ej: admin@coforma.es
-    const to = process.env.RESEND_TO_EMAIL || from; // si no defines TO, se envía a FROM
+    const from = process.env.RESEND_FROM_EMAIL;
+    const to = process.env.RESEND_TO_EMAIL || from;
 
     if (!resendKey || !from || !to) {
-      return new Response("Missing RESEND env vars", { status: 500 });
+      return Response.json(
+        { ok: false, error: "Missing RESEND env vars" },
+        { status: 500 }
+      );
     }
 
     const resend = new Resend(resendKey);
@@ -61,16 +63,18 @@ export async function POST(req: Request) {
     await resend.emails.send({
       from,
       to,
-      replyTo: email, // para responder al interesado directamente
+      replyTo: email,
       subject,
       text,
       html,
     });
 
-    // IMPORTANTE: devolver 200 SIEMPRE que el send fue OK
-    return Response.json({ ok: true });
+    return Response.json({ ok: true }, { status: 200 });
   } catch (err) {
     console.error("CONTACT_API_ERROR", err);
-    return new Response("Error sending message", { status: 500 });
+    return Response.json(
+      { ok: false, error: "Error sending message" },
+      { status: 500 }
+    );
   }
 }
