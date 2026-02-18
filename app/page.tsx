@@ -96,10 +96,12 @@ function ContactForm({ onSent }: { onSent: () => void }) {
         body: JSON.stringify(payload),
       });
 
-      if (!res.ok) {
-        const t = await res.text();
-        throw new Error(t || 'Error enviando el formulario');
-      }
+      const data = await res.json().catch(() => null);
+
+if (!res.ok || !data?.ok) {
+  throw new Error(data?.error || 'Error enviando el formulario');
+}
+
 
       setOk(true);
       e.currentTarget.reset();
