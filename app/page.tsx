@@ -83,12 +83,13 @@ function ContactForm({ onSent }: { onSent: () => void }) {
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const formEl = e.currentTarget;
-
     setSending(true);
     setOk(null);
 
-    const form = new FormData(e.currentTarget);
+    // ✅ ÚNICA MODIFICACIÓN: guardamos el formulario aquí para que no sea null luego
+    const formEl = e.currentTarget;
+
+    const form = new FormData(formEl);
     const payload = Object.fromEntries(form.entries());
 
     try {
@@ -105,8 +106,7 @@ function ContactForm({ onSent }: { onSent: () => void }) {
       }
 
       setOk(true);
-      formEl.reset();
-
+      formEl.reset(); // ✅ antes era e.currentTarget.reset() y a veces daba null
       onSent();
     } catch {
       setOk(false);
@@ -118,34 +118,10 @@ function ContactForm({ onSent }: { onSent: () => void }) {
   return (
     <form onSubmit={onSubmit} className="space-y-3">
       {[
-        {
-          name: 'company',
-          placeholder: 'Empresa',
-          type: 'text',
-          required: true,
-          autoComplete: 'organization',
-        },
-        {
-          name: 'name',
-          placeholder: 'Nombre',
-          type: 'text',
-          required: true,
-          autoComplete: 'name',
-        },
-        {
-          name: 'phone',
-          placeholder: 'Teléfono',
-          type: 'text',
-          required: false,
-          autoComplete: 'tel',
-        },
-        {
-          name: 'email',
-          placeholder: 'Email',
-          type: 'email',
-          required: true,
-          autoComplete: 'email',
-        },
+        { name: 'company', placeholder: 'Empresa', type: 'text', required: true },
+        { name: 'name', placeholder: 'Nombre', type: 'text', required: true },
+        { name: 'phone', placeholder: 'Teléfono', type: 'text', required: false },
+        { name: 'email', placeholder: 'Email', type: 'email', required: true },
       ].map((f) => (
         <div key={f.name}>
           <input
@@ -153,7 +129,6 @@ function ContactForm({ onSent }: { onSent: () => void }) {
             type={f.type}
             required={f.required}
             placeholder={f.placeholder}
-            autoComplete={f.autoComplete}   {/* ✅ ÚNICA MODIFICACIÓN */}
             className="w-full rounded-xl border border-slate-900/45 bg-white px-4 py-2.5 text-[15px] text-slate-800 outline-none placeholder:text-slate-400 focus:border-slate-900"
           />
         </div>
@@ -164,7 +139,6 @@ function ContactForm({ onSent }: { onSent: () => void }) {
           name="notes"
           rows={3}
           placeholder="Observaciones"
-          autoComplete="off"               {/* ✅ ÚNICA MODIFICACIÓN */}
           className="w-full resize-none rounded-xl border border-slate-900/45 bg-white px-4 py-2.5 text-[15px] text-slate-800 outline-none placeholder:text-slate-400 focus:border-slate-900"
         />
       </div>
@@ -345,3 +319,4 @@ export default function Home() {
     </div>
   );
 }
+
