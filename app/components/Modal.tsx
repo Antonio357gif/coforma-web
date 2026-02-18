@@ -30,19 +30,28 @@ export default function Modal({
 
   return (
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/40 p-4"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/40 p-3 sm:p-4"
       role="dialog"
       aria-modal="true"
       onMouseDown={(e) => {
-        // cerrar al clickar en el fondo (no en el contenido)
         if (e.target === e.currentTarget) onClose();
       }}
     >
       <div
-        className={`w-full ${maxWidthClass} overflow-hidden rounded-[26px] bg-white shadow-[0_28px_90px_rgba(15,23,42,0.25)]`}
+        className={[
+          'w-full',
+          'max-w-[94vw]',          // en móvil no se sale
+          'sm:max-w-none',         // en pantallas mayores respeta maxWidthClass
+          maxWidthClass,
+          'max-h-[92vh]',          // en móvil no se corta por abajo
+          'overflow-hidden',
+          'rounded-[26px]',
+          'bg-white',
+          'shadow-[0_28px_90px_rgba(15,23,42,0.25)]',
+        ].join(' ')}
       >
-        <div className="flex items-center justify-between px-6 py-4">
-          <div className="text-xl font-extrabold tracking-tight text-slate-900">
+        <div className="flex items-center justify-between px-4 py-3 sm:px-6 sm:py-4">
+          <div className="text-lg font-extrabold tracking-tight text-slate-900 sm:text-xl">
             {title}
           </div>
 
@@ -55,7 +64,10 @@ export default function Modal({
           </button>
         </div>
 
-        <div className="px-6 pb-6">{children}</div>
+        {/* Aquí es donde permitimos scroll del contenido en móvil */}
+        <div className="max-h-[calc(92vh-56px)] overflow-y-auto px-4 pb-4 sm:max-h-none sm:overflow-visible sm:px-6 sm:pb-6">
+          {children}
+        </div>
       </div>
     </div>
   );
