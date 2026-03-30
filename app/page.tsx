@@ -86,7 +86,6 @@ function ContactForm({ onSent }: { onSent: () => void }) {
     setSending(true);
     setOk(null);
 
-    // ✅ ÚNICA MODIFICACIÓN: guardamos el formulario aquí para que no sea null luego
     const formEl = e.currentTarget;
 
     const form = new FormData(formEl);
@@ -106,7 +105,7 @@ function ContactForm({ onSent }: { onSent: () => void }) {
       }
 
       setOk(true);
-      formEl.reset(); // ✅ antes era e.currentTarget.reset() y a veces daba null
+      formEl.reset();
       onSent();
     } catch {
       setOk(false);
@@ -185,8 +184,13 @@ export default function Home() {
           />
         </div>
 
-        <nav className="hidden items-center gap-7 text-sm font-semibold text-slate-700 md:flex">
-          <a href="#inicio" className="hover:text-slate-900">Inicio</a>
+        <nav className="hidden items-center gap-4 text-sm font-semibold text-slate-700 md:flex">
+          <a
+            href="https://app.coforma.es/login"
+            className="rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-emerald-800 transition hover:border-emerald-300 hover:bg-emerald-100"
+          >
+            Área clientes
+          </a>
           <a href="#caracteristicas" className="hover:text-slate-900">Características</a>
           <a href="#tarifas" className="hover:text-slate-900">Tarifas</a>
         </nav>
@@ -319,4 +323,3 @@ export default function Home() {
     </div>
   );
 }
-
