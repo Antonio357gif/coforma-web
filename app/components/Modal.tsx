@@ -7,7 +7,7 @@ export default function Modal({
   title,
   onClose,
   children,
-  maxWidthClass = 'max-w-5xl',
+  maxWidthClass = 'max-w-3xl', // Mantener el ancho máximo controlado
 }: {
   open: boolean;
   title: string;
@@ -22,51 +22,56 @@ export default function Modal({
       if (e.key === 'Escape') onClose();
     };
 
+    document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKey);
+    };
   }, [open, onClose]);
 
   if (!open) return null;
 
   return (
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/40 p-3 sm:p-4"
+      className="fixed inset-0 z-[9999] bg-slate-900/45 p-3 sm:p-4"
       role="dialog"
       aria-modal="true"
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div
-        className={[
-          'w-full',
-          'max-w-[94vw]',          // en móvil no se sale
-          'sm:max-w-none',         // en pantallas mayores respeta maxWidthClass
-          maxWidthClass,
-          'max-h-[92vh]',          // en móvil no se corta por abajo
-          'overflow-hidden',
-          'rounded-[26px]',
-          'bg-white',
-          'shadow-[0_28px_90px_rgba(15,23,42,0.25)]',
-        ].join(' ')}
-      >
-        <div className="flex items-center justify-between px-4 py-3 sm:px-6 sm:py-4">
-          <div className="text-lg font-extrabold tracking-tight text-slate-900 sm:text-xl">
-            {title}
+      <div className="flex min-h-full items-center justify-center pt-6 sm:pt-8">
+        <div
+          className={[
+            'w-[calc(100vw-24px)]',
+            'sm:w-full',
+            maxWidthClass,
+            'max-h-[calc(100vh-48px)]', // Limitar la altura para que no haya desplazamiento
+            'overflow-auto', // Si el contenido es grande, permitimos el scroll solo dentro del modal
+            'rounded-[18px]',
+            'bg-white',
+            'shadow-[0_24px_80px_rgba(15,23,42,0.24)]',
+          ].join(' ')}
+        >
+          <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3 sm:px-5">
+            <div className="text-[16px] font-extrabold tracking-tight text-slate-900 sm:text-[17px]">
+              {title}
+            </div>
+
+            <button
+              onClick={onClose}
+              aria-label="Cerrar"
+              className="rounded-lg p-1.5 text-slate-500 transition hover:bg-slate-100 hover:text-slate-800"
+            >
+              ✕
+            </button>
           </div>
 
-          <button
-            onClick={onClose}
-            aria-label="Cerrar"
-            className="rounded-xl p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
-          >
-            ✕
-          </button>
-        </div>
-
-        {/* Aquí es donde permitimos scroll del contenido en móvil */}
-        <div className="max-h-[calc(92vh-56px)] overflow-y-auto px-4 pb-4 sm:max-h-none sm:overflow-visible sm:px-6 sm:pb-6">
-          {children}
+          <div className="overflow-y-auto px-3 py-3 sm:px-4 sm:py-4">
+            {children}
+          </div>
         </div>
       </div>
     </div>

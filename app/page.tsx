@@ -31,9 +31,9 @@ function DemoCarousel({
   const next = () => setI((v) => (v + 1) % demoSlides.length);
 
   return (
-    <div className="w-full">
-      <div className="relative w-full overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
-        <div className="relative h-[54vh] min-h-[320px] max-h-[520px] w-full">
+    <div className="mx-auto w-full max-w-[760px]">
+      <div className="mx-auto overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
+        <div className="relative h-[220px] w-full sm:h-[280px] lg:h-[340px]">
           <Image
             src={demoSlides[i]}
             alt={`Demo ${i + 1}`}
@@ -44,7 +44,7 @@ function DemoCarousel({
         </div>
       </div>
 
-      <div className="mt-4 flex items-center justify-between gap-3">
+      <div className="mt-3 flex items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-2">
           {demoSlides.map((_, idx) => (
             <button
@@ -61,13 +61,13 @@ function DemoCarousel({
         <div className="flex items-center gap-2">
           <button
             onClick={prev}
-            className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 hover:bg-slate-50"
+            className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-[13px] font-bold text-slate-700 transition hover:bg-slate-50"
           >
             ← Atrás
           </button>
           <button
             onClick={next}
-            className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 hover:bg-slate-50"
+            className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-[13px] font-bold text-slate-700 transition hover:bg-slate-50"
           >
             Siguiente →
           </button>
@@ -87,7 +87,6 @@ function ContactForm({ onSent }: { onSent: () => void }) {
     setOk(null);
 
     const formEl = e.currentTarget;
-
     const form = new FormData(formEl);
     const payload = Object.fromEntries(form.entries());
 
@@ -115,47 +114,67 @@ function ContactForm({ onSent }: { onSent: () => void }) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-3">
-      {[
-        { name: 'company', placeholder: 'Empresa', type: 'text', required: true },
-        { name: 'name', placeholder: 'Nombre', type: 'text', required: true },
-        { name: 'phone', placeholder: 'Teléfono', type: 'text', required: false },
-        { name: 'email', placeholder: 'Email', type: 'email', required: true },
-      ].map((f) => (
-        <div key={f.name}>
-          <input
-            name={f.name}
-            type={f.type}
-            required={f.required}
-            placeholder={f.placeholder}
-            className="w-full rounded-xl border border-slate-900/45 bg-white px-4 py-2.5 text-[15px] text-slate-800 outline-none placeholder:text-slate-400 focus:border-slate-900"
-          />
-        </div>
-      ))}
-
-      <div>
-        <textarea
-          name="notes"
-          rows={3}
-          placeholder="Observaciones"
-          className="w-full resize-none rounded-xl border border-slate-900/45 bg-white px-4 py-2.5 text-[15px] text-slate-800 outline-none placeholder:text-slate-400 focus:border-slate-900"
-        />
+    <div className="mx-auto max-w-[280px]">
+      <div className="mb-2">
+        <p className="text-[11px] leading-4 text-slate-600">
+          Déjanos tus datos y te contactamos para enseñarte Coforma.
+        </p>
       </div>
 
-      <button
-        type="submit"
-        disabled={sending}
-        className="w-full rounded-xl bg-blue-600 px-5 py-3 text-base font-extrabold text-white hover:bg-blue-700 disabled:opacity-60"
-      >
-        {sending ? 'Enviando…' : 'Enviar solicitud'}
-      </button>
+      <form onSubmit={onSubmit} className="space-y-1.5">
+        <input
+          name="company"
+          type="text"
+          required
+          placeholder="Empresa"
+          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-[12px] text-slate-800 outline-none placeholder:text-slate-400 focus:border-slate-900"
+        />
 
-      {ok === false && (
-        <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-800">
-          No se pudo enviar ahora mismo. Prueba de nuevo.
-        </div>
-      )}
-    </form>
+        <input
+          name="name"
+          type="text"
+          required
+          placeholder="Nombre"
+          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-[12px] text-slate-800 outline-none placeholder:text-slate-400 focus:border-slate-900"
+        />
+
+        <input
+          name="phone"
+          type="text"
+          placeholder="Teléfono"
+          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-[12px] text-slate-800 outline-none placeholder:text-slate-400 focus:border-slate-900"
+        />
+
+        <input
+          name="email"
+          type="email"
+          required
+          placeholder="Email"
+          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-[12px] text-slate-800 outline-none placeholder:text-slate-400 focus:border-slate-900"
+        />
+
+        <textarea
+          name="notes"
+          rows={2}
+          placeholder="Observaciones"
+          className="w-full resize-none rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-[12px] text-slate-800 outline-none placeholder:text-slate-400 focus:border-slate-900"
+        />
+
+        <button
+          type="submit"
+          disabled={sending}
+          className="w-full rounded-lg bg-emerald-600 px-3 py-1.5 text-[12px] font-bold text-white transition hover:bg-emerald-700 disabled:opacity-60"
+        >
+          {sending ? 'Enviando…' : 'Enviar solicitud'}
+        </button>
+
+        {ok === false && (
+          <div className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-[11px] font-semibold text-rose-800">
+            No se pudo enviar ahora mismo. Prueba de nuevo.
+          </div>
+        )}
+      </form>
+    </div>
   );
 }
 
@@ -191,8 +210,12 @@ export default function Home() {
           >
             Área clientes
           </a>
-          <a href="#caracteristicas" className="hover:text-slate-900">Características</a>
-          <a href="#tarifas" className="hover:text-slate-900">Tarifas</a>
+          <a href="#caracteristicas" className="hover:text-slate-900">
+            Características
+          </a>
+          <a href="#tarifas" className="hover:text-slate-900">
+            Tarifas
+          </a>
         </nav>
       </header>
 
@@ -223,7 +246,7 @@ export default function Home() {
                     setDemoIndex(0);
                     setOpenDemo(true);
                   }}
-                  className="rounded-2xl border border-slate-200 bg-white px-6 py-3 text-base font-extrabold text-slate-900 hover:bg-slate-50"
+                  className="rounded-2xl border border-slate-200 bg-white px-6 py-3 text-base font-extrabold text-slate-900 transition hover:bg-slate-50"
                 >
                   Ver DEMO
                 </button>
@@ -234,7 +257,7 @@ export default function Home() {
                     setOpenDemo(false);
                     setOpenContact(true);
                   }}
-                  className="rounded-2xl bg-emerald-600 px-6 py-3 text-base font-extrabold text-white shadow-[0_14px_38px_rgba(16,185,129,0.22)] hover:bg-emerald-700"
+                  className="rounded-2xl bg-emerald-600 px-6 py-3 text-base font-extrabold text-white shadow-[0_14px_38px_rgba(16,185,129,0.22)] transition hover:bg-emerald-700"
                 >
                   Concertar cita
                 </button>
@@ -258,9 +281,18 @@ export default function Home() {
       <section id="caracteristicas" className="mx-auto max-w-6xl px-5 pb-12 sm:px-6">
         <div className="mt-10 grid gap-6 lg:grid-cols-3">
           {[
-            { title: 'Registra tus cursos y convocatorias', body: 'Añade fácilmente tus cursos, horarios y convocatorias en un solo clic.' },
-            { title: 'Gestiona inscripciones sin complicaciones', body: 'Centraliza alumnos, etapas, asistencia y documentación con trazabilidad.' },
-            { title: 'Control total de tus convocatorias', body: 'Supervisa progreso y resultados desde un panel unificado y auditable.' },
+            {
+              title: 'Registra tus cursos y convocatorias',
+              body: 'Añade fácilmente tus cursos, horarios y convocatorias en un solo clic.',
+            },
+            {
+              title: 'Gestiona inscripciones sin complicaciones',
+              body: 'Centraliza alumnos, etapas, asistencia y documentación con trazabilidad.',
+            },
+            {
+              title: 'Control total de tus convocatorias',
+              body: 'Supervisa progreso y resultados desde un panel unificado y auditable.',
+            },
           ].map((c) => (
             <div
               key={c.title}
@@ -301,7 +333,7 @@ export default function Home() {
         open={openDemo}
         title="DEMO"
         onClose={() => setOpenDemo(false)}
-        maxWidthClass="max-w-5xl"
+        maxWidthClass="max-w-[820px]"
       >
         <DemoCarousel i={demoIndex} setI={setDemoIndex} />
       </Modal>
@@ -313,7 +345,7 @@ export default function Home() {
         maxWidthClass="max-w-sm"
       >
         {sentMsg ? (
-          <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-base font-bold text-emerald-800">
+          <div className="mx-auto max-w-[280px] rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-[12px] font-bold text-emerald-800">
             Mensaje enviado
           </div>
         ) : (
