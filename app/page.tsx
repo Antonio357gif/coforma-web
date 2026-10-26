@@ -578,6 +578,8 @@ export default function Home() {
             Flujo formativo
           </a>
 
+          <a href="/tarifas" className="hover:text-slate-950">Tarifas y ofertas</a>
+
           <a href="#controles" className="hover:text-slate-950">
             Controles
           </a>
