@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import React, { useEffect, useMemo, useState } from 'react';
 
+import HeroCube from './components/HeroCube';
 import Modal from './components/Modal';
 
 type FlowModule = {
@@ -651,14 +652,7 @@ export default function Home() {
               <div className="relative">
                 <div className="absolute -inset-4 -z-10 rounded-[36px] bg-[radial-gradient(460px_280px_at_52%_48%,rgba(16,185,129,0.12),transparent_66%)]" />
                 <div className="overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.13)]">
-                  <Image
-                    src="/hero/coforma-hero-operaciones.png"
-                    alt="Equipo coordinando la gestión formativa desde una plataforma integral"
-                    width={1100}
-                    height={690}
-                    className="h-auto w-full object-cover"
-                    priority
-                  />
+                  <HeroCube />
                 </div>
               </div>
             </div>

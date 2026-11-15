@@ -1,53 +1,62 @@
 'use client';
 
+import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
+
+import { startHeroCube } from './hero-cube-renderer';
+
 export default function HeroCube() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationRef = useRef<ReturnType<typeof startHeroCube>>(undefined);
+  const [ready, setReady] = useState(false);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+    const animation = startHeroCube(canvasRef.current, () => setReady(true), setPaused);
+    animationRef.current = animation;
+    return () => animation?.dispose();
+  }, []);
+
   return (
-    <div className="relative h-[300px] w-full overflow-hidden rounded-[28px] bg-transparent sm:h-[340px] lg:h-[390px]">
-      <div className="hero-perspective absolute inset-0 flex items-center justify-center bg-transparent">
-        <img
-          src="/hero/hero-apples.jpg"
-          alt="Coforma - Plataforma integral de gestión formativa"
-          className="hero-apples-image h-auto w-[94%] max-w-[650px] select-none rounded-[22px] object-contain"
-          draggable={false}
+    <figure
+      className="relative m-0 h-[clamp(250px,53vw,360px)] overflow-hidden rounded-[29px] bg-[#030507] lg:h-[clamp(310px,34vw,422px)]"
+      aria-label="Cubo de Coforma"
+    >
+      {!ready && (
+        <Image
+          src="/hero/cubo-portada.webp"
+          fill
+          sizes="(max-width: 1023px) 90vw, 540px"
+          alt="Cubo tridimensional con el isotipo de Coforma en una de sus caras"
+          className="object-contain"
         />
-      </div>
-
-      <style jsx>{`
-        .hero-perspective {
-          perspective: 1200px;
-          perspective-origin: center center;
-        }
-
-        .hero-apples-image {
-          animation: heroSpin 12s linear infinite;
-          transform-origin: center center;
-          transform-style: preserve-3d;
-          filter: drop-shadow(0 22px 34px rgba(15, 23, 42, 0.16));
-          will-change: transform;
-        }
-
-        @keyframes heroSpin {
-          0% {
-            transform: rotateY(0deg) rotateX(0deg) translateY(0px) scale(1);
-          }
-
-          25% {
-            transform: rotateY(90deg) rotateX(1deg) translateY(-5px) scale(1.01);
-          }
-
-          50% {
-            transform: rotateY(180deg) rotateX(0deg) translateY(-8px) scale(1);
-          }
-
-          75% {
-            transform: rotateY(270deg) rotateX(-1deg) translateY(-5px) scale(1.01);
-          }
-
-          100% {
-            transform: rotateY(360deg) rotateX(0deg) translateY(0px) scale(1);
-          }
-        }
-      `}</style>
-    </div>
+      )}
+      <canvas
+        ref={canvasRef}
+        role="img"
+        aria-hidden={!ready}
+        aria-label="Cubo tridimensional que muestra el isotipo y el nombre de Coforma en caras distintas, se mezcla y repite el ciclo"
+        className={`relative block h-full w-full ${ready ? '' : 'invisible'}`}
+      />
+      {ready && (
+        <div className="absolute bottom-2 right-2 flex gap-1.5">
+          <button
+            type="button"
+            onClick={() => animationRef.current?.replay()}
+            className="min-h-11 rounded-full border border-[#415553] bg-[#080f0f] px-3 text-xs font-medium text-emerald-50 hover:bg-emerald-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
+          >
+            Repetir
+          </button>
+          <button
+            type="button"
+            onClick={() => animationRef.current?.togglePause()}
+            className="min-h-11 rounded-full border border-[#415553] bg-[#080f0f] px-3 text-xs font-medium text-emerald-50 hover:bg-emerald-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
+          >
+            {paused ? 'Continuar' : 'Pausar'}
+          </button>
+        </div>
+      )}
+    </figure>
   );
 }
