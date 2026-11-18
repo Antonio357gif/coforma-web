@@ -37,13 +37,6 @@ export default function Home() {
                   Solicitar demo
                 </Link>
 
-                <VideoDialog
-                  id="presentacion-video"
-                  title="Presentación de Coforma"
-                  label="Ver presentación"
-                  src="/videos/presentacion-coforma.mp4"
-                />
-
                 <a
                   href="#videos"
                   className="rounded-2xl border border-slate-200 bg-white px-6 py-3 text-[15px] font-extrabold text-slate-900 transition hover:bg-slate-50"
