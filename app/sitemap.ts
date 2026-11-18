@@ -8,7 +8,7 @@ import { siteUrl } from './data/seo';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages = [
-    '/', '/plataforma', '/modulos', '/controles', '/tarifas', '/quienes-somos', '/contacto', '/demo', '/blog', '/legal',
+    '/', '/plataforma', '/modulos', '/controles', '/tarifas', '/quienes-somos', '/acerca-de', '/contacto', '/demo', '/blog', '/legal',
     ...profiles.map(({ path }) => path),
     ...flowModules.map(({ slug }) => `/modulos/${slug}`),
     ...operationalControls.map(({ slug }) => `/controles/${slug}`),

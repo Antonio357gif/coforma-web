@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { configuredSocialProfiles, editorialBlog } from '../data/channels';
 
 const navigation = [
   ['Plataforma', '/plataforma'],
@@ -42,15 +43,24 @@ export function SiteHeader() {
 }
 
 export function SiteFooter() {
+  const socialProfiles = configuredSocialProfiles();
+
   return (
     <footer className="border-t border-slate-200 bg-white">
-      <div className="mx-auto grid max-w-6xl gap-6 px-5 py-8 text-sm text-slate-600 sm:grid-cols-3 sm:px-6">
+      <div className="mx-auto grid max-w-6xl gap-6 px-5 py-8 text-sm text-slate-600 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
         <div><Brand /><p className="mt-3 max-w-xs">CRM integral para academias y entidades de Formación Profesional para el Empleo.</p></div>
         <nav aria-label="Producto" className="flex flex-col gap-2">
           <Link href="/plataforma">Plataforma</Link>
           <Link href="/controles">Controles operativos</Link>
           <Link href="/demo">Ver la demo</Link>
           <Link href="/contacto">Solicitar demo</Link>
+        </nav>
+        <nav aria-label="Coforma y recursos" className="flex flex-col gap-2">
+          <Link href="/quienes-somos">Quiénes somos</Link>
+          <Link href="/acerca-de">Acerca de Coforma</Link>
+          <Link href="/blog">Guías para academias</Link>
+          <a href={editorialBlog}>Blog de Coforma (en preparación)</a>
+          {socialProfiles.map(({ name, url }) => <a key={name} href={url}>Coforma en {name}</a>)}
         </nav>
         <nav aria-label="Información legal" className="flex flex-col gap-2">
           {legal.map(([name, href]) => <Link key={href} href={href}>{name}</Link>)}
