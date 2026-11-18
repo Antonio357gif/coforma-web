@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
+import { SiteFooter, SiteHeader } from "./components/SiteShell";
+import CookieNotice from "./components/CookieNotice";
+import { siteUrl } from "./data/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,7 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Coforma | CRM Integral FPE",
+  metadataBase: new URL(siteUrl),
+  alternates: { canonical: "/" },
+  title: { default: "Coforma | CRM Integral FPE para academias", template: "%s | Coforma" },
   description:
     "Plataforma integral para la gestión de formación, alumnado y convocatorias FPE.",
 };
@@ -31,9 +35,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {children}
-        <Analytics />
+      <body className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col bg-slate-50 text-slate-900 antialiased`}>
+        <SiteHeader />
+        <main className="grow">{children}</main>
+        <SiteFooter />
+        <CookieNotice />
       </body>
     </html>
   );

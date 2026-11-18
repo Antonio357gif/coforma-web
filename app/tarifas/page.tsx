@@ -1,5 +1,9 @@
 import Link from "next/link";
 
+import { pageMetadata } from "../data/seo";
+
+export const metadata = pageMetadata("Tarifas y ofertas del CRM FPE", "Consulta las tarifas y ofertas de Coforma publicadas desde la Consola o solicita una propuesta para tu academia.", "/tarifas");
+
 export const dynamic = "force-dynamic";
 
 type TarifaPublica = {
@@ -39,11 +43,7 @@ const modalidadEtiqueta: Record<TarifaPublica["modalidad"], string> = {
 export default async function TarifasPage() {
   const { items, disponible } = await consultarCatalogo();
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-950">
-      <header className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-6">
-        <Link href="/" className="text-2xl font-black"><span className="text-emerald-600">Co</span>forma</Link>
-        <Link href="/" className="text-sm font-semibold text-slate-600 hover:text-slate-950">Volver a la web</Link>
-      </header>
+    <div>
       <section className="mx-auto max-w-6xl px-5 pb-16 pt-10">
         <p className="text-xs font-bold uppercase tracking-widest text-emerald-700">Coforma SaaS</p>
         <h1 className="mt-2 text-3xl font-black md:text-4xl">Tarifas y ofertas</h1>
@@ -56,6 +56,7 @@ export default async function TarifasPage() {
         {disponible && items.length === 0 && <p className="mt-8 rounded-xl border border-slate-200 bg-white p-5 text-sm text-slate-600">
           Actualmente no hay tarifas u ofertas públicas. Solicita una propuesta adaptada a tu empresa o grupo.
         </p>}
+        <Link href="/contacto" className="mt-5 inline-block font-bold text-emerald-800 underline">Pedir una propuesta comercial</Link>
         <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {items.map((item) => (
             <article key={item.id} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -70,14 +71,25 @@ export default async function TarifasPage() {
                 </p>
                 <p className="mt-1 text-xs text-slate-500">{modalidadEtiqueta[item.modalidad]} · {item.condicion_fiscal}</p>
               </div>
-              <a href="mailto:admin@coforma.es?subject=Consulta%20comercial%20Coforma"
+              <Link href="/contacto"
                 className="mt-6 inline-block rounded-lg bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white">
                 Solicitar propuesta
-              </a>
+              </Link>
             </article>
           ))}
         </div>
+        <section className="mt-10 max-w-3xl space-y-4" aria-labelledby="pricing-faq">
+          <h2 id="pricing-faq" className="text-xl font-bold">Preguntas sobre tarifas</h2>
+          <details className="rounded-xl border border-slate-200 bg-white p-4">
+            <summary className="cursor-pointer font-semibold">¿Cómo solicito una propuesta para varias academias?</summary>
+            <p className="mt-2 text-sm leading-6 text-slate-600">Indica en el formulario cuántas academias quieres gestionar y cómo se organiza el grupo para que podamos revisar contigo qué configuración necesitas.</p>
+          </details>
+          <details className="rounded-xl border border-slate-200 bg-white p-4">
+            <summary className="cursor-pointer font-semibold">¿Dónde veo el importe y las condiciones de una oferta?</summary>
+            <p className="mt-2 text-sm leading-6 text-slate-600">Cada ficha publicada muestra el importe, la modalidad y la condición fiscal que figuran en el catálogo comercial.</p>
+          </details>
+        </section>
       </section>
-    </main>
+    </div>
   );
 }

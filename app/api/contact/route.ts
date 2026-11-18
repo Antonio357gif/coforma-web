@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     const email = String(body.email ?? "").trim();
     const notes = String(body.notes ?? "").trim();
 
-    if (!email) {
+    if (!email || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json({ ok: false, error: "Missing email" }, { status: 400 });
     }
 
@@ -61,7 +61,7 @@ export async function POST(req: Request) {
       <p><b>Observaciones:</b><br/>${esc(notes || "-").replace(/\n/g, "<br/>")}</p>
     `;
 
-    await resend.emails.send({
+    const { error } = await resend.emails.send({
       from,
       to,
       replyTo: email,
@@ -69,6 +69,10 @@ export async function POST(req: Request) {
       text,
       html,
     });
+
+    if (error) {
+      return NextResponse.json({ ok: false, error: "Error sending message" }, { status: 502 });
+    }
 
     return NextResponse.json({ ok: true }, { status: 200 });
   } catch (err) {
