@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import React, { useEffect, useMemo, useState } from 'react';
 
+import DemoVideos from './components/DemoVideos';
 import HeroCube from './components/HeroCube';
 import Modal from './components/Modal';
 
@@ -575,6 +576,10 @@ export default function Home() {
             Plataforma
           </a>
 
+          <a href="#videos" className="hover:text-slate-950">
+            Vídeos
+          </a>
+
           <a href="#flujo" className="hover:text-slate-950">
             Flujo formativo
           </a>
@@ -625,10 +630,10 @@ export default function Home() {
                   </button>
 
                   <a
-                    href="#flujo"
+                    href="#videos"
                     className="rounded-2xl border border-slate-200 bg-white px-6 py-3 text-[15px] font-extrabold text-slate-900 transition hover:bg-slate-50"
                   >
-                    Ver flujo operativo
+                    Ver en vídeo
                   </a>
                 </div>
 
@@ -682,6 +687,8 @@ export default function Home() {
             ))}
           </div>
         </section>
+
+        <DemoVideos />
 
         <section id="flujo" className="mx-auto max-w-6xl px-5 pb-6 sm:px-6">
           <div className="rounded-[30px] border border-slate-200 bg-white/78 p-5 shadow-[0_16px_52px_rgba(15,23,42,0.08)] backdrop-blur sm:p-6">
