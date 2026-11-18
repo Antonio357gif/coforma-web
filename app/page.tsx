@@ -5,6 +5,8 @@ import { operationalControls } from './data/controls';
 import { flowModules } from './data/modules';
 import { profiles } from './data/profiles';
 
+const directoryLink = "flex min-h-11 items-center justify-between gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-900 hover:border-emerald-300 hover:bg-emerald-50 focus-visible:outline-2 focus-visible:outline-emerald-700";
+
 export default function Home() {
   return (
     <div>
@@ -74,99 +76,41 @@ export default function Home() {
 
       <DemoVideos />
 
-      <section id="flujo" className="mx-auto max-w-6xl px-5 pb-6 sm:px-6">
-        <div className="rounded-[30px] border border-slate-200 bg-white/78 p-5 shadow-[0_16px_52px_rgba(15,23,42,0.08)] backdrop-blur sm:p-6">
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <div className="text-[12px] font-extrabold uppercase tracking-[0.18em] text-emerald-700">
-                Flujo formativo completo
-              </div>
-              <h2 className="mt-2 text-[23px] font-extrabold tracking-tight text-slate-950">
-                De la captación al panel de control.
-              </h2>
-            </div>
-
-            <p className="max-w-[460px] text-[13px] leading-6 text-slate-600">
-              Explora cada módulo, sus funciones y una captura de la aplicación.
-            </p>
-          </div>
-
-          <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {flowModules.map((module) => (
-              <Link
-                key={module.slug}
-                href={`/modulos/${module.slug}`}
-                className="group rounded-2xl border border-slate-200 bg-white p-4 text-left transition hover:-translate-y-0.5 hover:border-emerald-200 hover:bg-emerald-50/30 hover:shadow-[0_14px_38px_rgba(15,23,42,0.08)]"
-              >
-                <div className="flex items-start gap-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-emerald-50 text-[12px] font-extrabold text-emerald-800 ring-1 ring-emerald-100">
-                    {module.number}
-                  </div>
-
-                  <div>
-                    <h3 className="text-[15px] font-extrabold leading-5 text-slate-950">
-                      {module.title}
-                    </h3>
-
-                    <p className="mt-2 text-sm leading-6 text-slate-600">
-                      {module.body}
-                    </p>
-
-                    <div className="mt-3 inline-flex items-center rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1.5 text-[12px] font-extrabold text-emerald-700 transition group-hover:border-emerald-200 group-hover:bg-emerald-100">
-                      Ver módulo →
-                    </div>
-                  </div>
-                </div>
-              </Link>
+      <section id="flujo" aria-labelledby="flujo-title" className="mx-auto max-w-6xl px-5 pb-6 sm:px-6">
+        <div className="rounded-[30px] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 id="flujo-title" className="text-2xl font-extrabold tracking-tight text-slate-950">De la captación al panel de control</h2>
+          <ul className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+            {flowModules.map(({ slug, title }) => (
+              <li key={slug}>
+                <Link href={`/modulos/${slug}`} className={directoryLink}>
+                  {title}
+                  <span aria-hidden="true" className="text-emerald-800">→</span>
+                </Link>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
-      <section id="controles" className="mx-auto max-w-6xl px-5 pb-6 sm:px-6">
-        <div className="rounded-[30px] border border-slate-200 bg-white/78 p-5 shadow-[0_16px_52px_rgba(15,23,42,0.08)] backdrop-blur sm:p-6">
-          <div className="grid gap-5 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+      <section id="controles" aria-labelledby="controles-title" className="mx-auto max-w-6xl px-5 pb-6 sm:px-6">
+        <div className="rounded-[30px] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <div className="grid gap-5 lg:grid-cols-[0.8fr_1.2fr]">
             <div>
-              <div className="text-[12px] font-extrabold uppercase tracking-[0.18em] text-emerald-700">
-                Controles operativos integrados
-              </div>
-
-              <h2 className="mt-2 text-[23px] font-extrabold tracking-tight text-slate-950">
-                Pequeños controles que evitan errores reales.
-              </h2>
-
-              <p className="mt-3 text-[14px] leading-7 text-slate-700">
-                Revisa los avisos de duplicados y solapamientos y consulta el historial de actividad antes de continuar una gestión.
+              <h2 id="controles-title" className="text-2xl font-extrabold tracking-tight text-slate-950">Controles operativos</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-700">
+                Revisa avisos de duplicados y solapamientos y consulta el historial antes de continuar una gestión.
               </p>
-
             </div>
-
-            <div className="grid gap-3 sm:grid-cols-2">
-              {operationalControls.map((control) => (
-                <article
-                  key={control.title}
-                  className="rounded-2xl border border-slate-200 bg-white px-4 py-4 shadow-[0_10px_28px_rgba(15,23,42,0.05)] transition hover:-translate-y-0.5 hover:border-emerald-200 hover:bg-emerald-50/25"
-                >
-                  <div className="mb-2 inline-flex rounded-full border border-emerald-100 bg-emerald-50 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.12em] text-emerald-700">
-                    {control.badge}
-                  </div>
-
-                  <h3 className="text-[14px] font-extrabold leading-5 text-slate-950">
-                    {control.title}
-                  </h3>
-
-                  <p className="mt-2 text-sm leading-6 text-slate-600">
-                    {control.body}
-                  </p>
-
-                  <Link href={`/controles/${control.slug}`}
-                    className="mt-3 inline-flex items-center rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1.5 text-[12px] font-extrabold text-emerald-700 transition hover:border-emerald-200 hover:bg-emerald-100"
-                  >
-                    Ver más →
+            <ul className="grid gap-2 sm:grid-cols-2">
+              {operationalControls.map(({ slug, title }) => (
+                <li key={slug}>
+                  <Link href={`/controles/${slug}`} className={directoryLink}>
+                    {title}
+                    <span aria-hidden="true" className="text-emerald-800">→</span>
                   </Link>
-                </article>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         </div>
       </section>

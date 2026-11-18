@@ -53,7 +53,6 @@ export function SiteFooter() {
           <Link href="/plataforma">Plataforma</Link>
           <Link href="/controles">Controles operativos</Link>
           <Link href="/demo">Ver la demo</Link>
-          <Link href="/contacto">Solicitar demo</Link>
         </nav>
         <nav aria-label="Coforma y recursos" className="flex flex-col gap-2">
           <Link href="/quienes-somos">Quiénes somos</Link>
