@@ -136,11 +136,19 @@ export default function Home() {
             de captación, matrícula, planificación y seguimiento.
           </p>
 
-          <Link href="/contacto"
-            className="mt-5 inline-block rounded-2xl bg-emerald-600 px-6 py-3 text-[15px] font-extrabold text-white shadow-[0_14px_34px_rgba(16,185,129,0.20)] transition hover:bg-emerald-700"
-          >
-            Solicitar demo
-          </Link>
+          <div className="mt-5 flex flex-wrap justify-center gap-3">
+            <Link href="/contacto"
+              className="inline-block rounded-2xl bg-emerald-600 px-6 py-3 text-[15px] font-extrabold text-white shadow-[0_14px_34px_rgba(16,185,129,0.20)] transition hover:bg-emerald-700"
+            >
+              Solicitar demo
+            </Link>
+            <VideoDialog
+              id="mensaje-personal-video"
+              title="Mensaje personal de Antonio para ti"
+              label="Mensaje personal de Antonio para ti"
+              src="/videos/presentacion-coforma.mp4"
+            />
+          </div>
         </div>
       </section>
     </div>
