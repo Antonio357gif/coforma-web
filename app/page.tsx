@@ -1,38 +1,11 @@
-'use client';
-
-import Image from 'next/image';
 import Link from 'next/link';
-import { flowModules } from './data/modules';
-import { operationalControls } from './data/controls';
-import { useState } from 'react';
-
 import DemoVideos from './components/DemoVideos';
 import HeroCube from './components/HeroCube';
-import Modal from './components/Modal';
-
-type PlatformCard = {
-  title: string;
-  image: string;
-};
-
-const platformCards: PlatformCard[] = [
-  {
-    title: 'Un flujo, no módulos aislados',
-    image: '/cards/01-flujo-conectado.png',
-  },
-  {
-    title: 'Pensada para FPE',
-    image: '/cards/02-fpe-operativa.png',
-  },
-  {
-    title: 'Escalable y multientidad',
-    image: '/cards/03-red-multientidad.png',
-  },
-];
+import { operationalControls } from './data/controls';
+import { flowModules } from './data/modules';
+import { profiles } from './data/profiles';
 
 export default function Home() {
-  const [selectedPlatformCard, setSelectedPlatformCard] = useState<PlatformCard | null>(null);
-
   return (
     <div>
       <div className="pointer-events-none fixed inset-0 -z-10">
@@ -43,26 +16,21 @@ export default function Home() {
         <div className="rounded-[30px] border border-slate-200 bg-white/72 p-6 shadow-[0_18px_58px_rgba(15,23,42,0.10)] backdrop-blur sm:p-8">
           <div className="grid items-center gap-7 lg:grid-cols-[0.95fr_1.05fr]">
             <div className="max-w-[590px]">
-              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-[13px] font-semibold text-emerald-900">
-                Gestión integral para <span className="font-extrabold">academias</span> →
-              </div>
+              <p className="text-sm font-semibold text-emerald-800">CRM para academias y grupos de Formación Profesional para el Empleo</p>
 
-              <h1 className="mt-5 text-[25px] font-extrabold leading-[1.12] tracking-tight text-slate-950 sm:text-[30px] lg:text-[34px]">
-                Todo el <span className="text-emerald-700">flujo formativo</span>, conectado y
-                bajo control.
+              <h1 className="mt-4 text-balance text-3xl font-extrabold leading-[1.08] tracking-tight text-slate-950 sm:text-4xl xl:text-5xl">
+                Todo el <span className="text-emerald-700">flujo formativo</span>, conectado y bajo control
               </h1>
 
-              <p className="mt-4 max-w-xl text-[15px] leading-7 text-slate-700 sm:text-[16px]">
-                Coforma centraliza captación, matrículas, alumnado, planificación,
-                comunicación y control operativo en una sola plataforma para academias
-                y entidades de Formación Profesional para el Empleo.
+              <p className="mt-4 max-w-xl text-base leading-7 text-slate-700 sm:text-lg">
+                Gestiona la captación, las matrículas y la planificación en un mismo CRM. Sigue la actividad de cada curso hasta el expediente académico.
               </p>
 
               <div className="mt-6 flex flex-wrap items-center gap-3">
                 <Link href="/contacto"
-                  className="rounded-2xl bg-emerald-600 px-6 py-3 text-[15px] font-extrabold text-white shadow-[0_14px_34px_rgba(16,185,129,0.22)] transition hover:bg-emerald-700"
+                  className="rounded-2xl bg-emerald-700 px-6 py-3 text-base font-bold text-white transition hover:bg-emerald-800"
                 >
-                  Solicitar Demo
+                  Solicitar demo
                 </Link>
 
                 <a
@@ -73,21 +41,6 @@ export default function Home() {
                 </a>
               </div>
 
-              <div className="mt-6 grid max-w-xl gap-3 sm:grid-cols-3">
-                {[
-                  ['Multientidad', 'Redes de academias y usuarios por roles.'],
-                  ['Trazabilidad', 'Cada paso queda vinculado al flujo formativo.'],
-                  ['Control operativo', 'Indicadores y tareas en un mismo entorno.'],
-                ].map(([title, body]) => (
-                  <div
-                    key={title}
-                    className="rounded-2xl border border-slate-200 bg-white/80 px-4 py-3"
-                  >
-                    <div className="text-[12px] font-extrabold text-slate-950">{title}</div>
-                    <div className="mt-1 text-[11px] leading-4 text-slate-600">{body}</div>
-                  </div>
-                ))}
-              </div>
             </div>
 
             <div className="relative">
@@ -100,26 +53,21 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="plataforma" className="mx-auto max-w-6xl px-5 pb-6 sm:px-6">
-        <div className="grid gap-4 lg:grid-cols-3">
-          {platformCards.map((card) => (
-            <button
-              key={card.title}
-              type="button"
-              onClick={() => setSelectedPlatformCard(card)}
-              className="group overflow-hidden rounded-3xl border border-slate-200 bg-white text-left shadow-[0_14px_42px_rgba(15,23,42,0.07)] backdrop-blur transition hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-[0_16px_46px_rgba(15,23,42,0.10)]"
-              aria-label={`Ampliar imagen: ${card.title}`}
+      <section id="plataforma" aria-labelledby="casos-portada" className="mx-auto max-w-6xl px-5 pb-8 pt-2 sm:px-6">
+        <h2 id="casos-portada" className="text-2xl font-extrabold tracking-tight text-slate-950">Coforma en tu equipo</h2>
+        <div className="mt-4 grid gap-3 md:grid-cols-3">
+          {profiles.map(({ path, label, intro }) => (
+            <Link
+              key={path}
+              href={path}
+              className="group rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-emerald-300 hover:bg-emerald-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700"
             >
-              <div className="relative h-[255px] w-full overflow-hidden bg-white p-2">
-                <Image
-                  src={card.image}
-                  alt={card.title}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 33vw"
-                  className="object-contain transition duration-300 group-hover:scale-[1.015]"
-                />
-              </div>
-            </button>
+              <h3 className="flex items-start justify-between gap-3 font-bold text-slate-950">
+                {label}
+                <span aria-hidden="true" className="text-emerald-800">→</span>
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-slate-700">{intro}</p>
+            </Link>
           ))}
         </div>
       </section>
@@ -160,7 +108,7 @@ export default function Home() {
                       {module.title}
                     </h3>
 
-                    <p className="mt-2 text-[12px] leading-5 text-slate-600">
+                    <p className="mt-2 text-sm leading-6 text-slate-600">
                       {module.body}
                     </p>
 
@@ -188,15 +136,9 @@ export default function Home() {
               </h2>
 
               <p className="mt-3 text-[14px] leading-7 text-slate-700">
-                Coforma no solo ordena pantallas: incorpora avisos, reglas y trazabilidad
-                para reducir duplicidades, mejorar la coordinación interna y anticipar
-                incidencias antes de que afecten al trabajo diario.
+                Revisa los avisos de duplicados y solapamientos y consulta el historial de actividad antes de continuar una gestión.
               </p>
 
-              <div className="mt-4 rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-[12px] font-semibold leading-5 text-emerald-900">
-                El valor no está solo en gestionar más datos, sino en evitar llamadas
-                repetidas, matrículas duplicadas, solapamientos y tareas invisibles.
-              </div>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2">
@@ -213,7 +155,7 @@ export default function Home() {
                     {control.title}
                   </h3>
 
-                  <p className="mt-2 text-[12px] leading-5 text-slate-600">
+                  <p className="mt-2 text-sm leading-6 text-slate-600">
                     {control.body}
                   </p>
 
@@ -243,31 +185,10 @@ export default function Home() {
           <Link href="/contacto"
             className="mt-5 inline-block rounded-2xl bg-emerald-600 px-6 py-3 text-[15px] font-extrabold text-white shadow-[0_14px_34px_rgba(16,185,129,0.20)] transition hover:bg-emerald-700"
           >
-            Solicitar Demo
+            Solicitar demo
           </Link>
         </div>
       </section>
-      <Modal
-        open={Boolean(selectedPlatformCard)}
-        title={selectedPlatformCard ? selectedPlatformCard.title : 'Coforma'}
-        onClose={() => setSelectedPlatformCard(null)}
-        maxWidthClass="max-w-6xl"
-      >
-        {selectedPlatformCard && (
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-            <div className="relative h-[260px] w-full sm:h-[520px] lg:h-[660px]">
-              <Image
-                src={selectedPlatformCard.image}
-                alt={selectedPlatformCard.title}
-                fill
-                sizes="95vw"
-                className="object-contain"
-              />
-            </div>
-          </div>
-        )}
-      </Modal>
-
     </div>
   );
 }
