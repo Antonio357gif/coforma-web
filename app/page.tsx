@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import DemoVideos from './components/DemoVideos';
-import OperationalControlsVideo from './components/OperationalControlsVideo';
-import VideoDialog from './components/VideoDialog';
 import HeroCube from './components/HeroCube';
 import { operationalControls } from './data/controls';
 import { flowModules } from './data/modules';
 import { profiles } from './data/profiles';
+import { operationalControlsVideo, personalMessageVideo, videoPath } from './data/videos';
 
 const directoryLink = "flex min-h-11 items-center justify-between gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-900 hover:border-emerald-300 hover:bg-emerald-50 focus-visible:outline-2 focus-visible:outline-emerald-700";
+const videoLink = "inline-flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-bold text-emerald-900 transition hover:bg-emerald-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700";
 
 export default function Home() {
   return (
@@ -114,7 +114,11 @@ export default function Home() {
               ))}
             </ul>
           </div>
-          <OperationalControlsVideo />
+          <div className="mt-4 flex justify-end border-t border-slate-200 pt-4">
+            <Link href={videoPath(operationalControlsVideo.slug)} className={videoLink}>
+              <span aria-hidden="true">▶</span> Ver vídeo
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -135,12 +139,9 @@ export default function Home() {
             >
               Solicitar demo
             </Link>
-            <VideoDialog
-              id="mensaje-personal-video"
-              title="Mensaje personal de Antonio para ti"
-              label="Mensaje personal de Antonio para ti"
-              src="/videos/presentacion-coforma.mp4"
-            />
+            <Link href={videoPath(personalMessageVideo.slug)} className={videoLink}>
+              <span aria-hidden="true">▶</span> {personalMessageVideo.title}
+            </Link>
           </div>
         </div>
       </section>
