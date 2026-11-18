@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import DemoVideos from './components/DemoVideos';
+import OperationalControlsVideo from './components/OperationalControlsVideo';
 import HeroCube from './components/HeroCube';
 import { operationalControls } from './data/controls';
 import { flowModules } from './data/modules';
@@ -112,6 +113,7 @@ export default function Home() {
               ))}
             </ul>
           </div>
+          <OperationalControlsVideo />
         </div>
       </section>
 
