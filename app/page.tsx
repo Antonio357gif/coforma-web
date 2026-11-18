@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import DemoVideos from './components/DemoVideos';
 import OperationalControlsVideo from './components/OperationalControlsVideo';
+import VideoDialog from './components/VideoDialog';
 import HeroCube from './components/HeroCube';
 import { operationalControls } from './data/controls';
 import { flowModules } from './data/modules';
@@ -35,6 +36,13 @@ export default function Home() {
                 >
                   Solicitar demo
                 </Link>
+
+                <VideoDialog
+                  id="presentacion-video"
+                  title="Presentación de Coforma"
+                  label="Ver presentación"
+                  src="/videos/presentacion-coforma.mp4"
+                />
 
                 <a
                   href="#videos"
