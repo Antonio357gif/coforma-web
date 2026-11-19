@@ -4,6 +4,7 @@ import type { MouseEvent } from 'react';
 import { useState, useSyncExternalStore } from 'react';
 import { usePathname } from 'next/navigation';
 import { siteUrl } from '../data/seo';
+import ShareIcon from './ShareIcon';
 
 export function SiteShare({ pagePaths }: { pagePaths: string[] }) {
   const pathname = usePathname();
@@ -17,7 +18,8 @@ export function SiteShare({ pagePaths }: { pagePaths: string[] }) {
   );
 }
 
-const optionClass = 'inline-flex min-h-11 items-center rounded-xl border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-800 hover:border-emerald-400 hover:bg-emerald-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700';
+const iconButton = 'inline-flex size-11 shrink-0 items-center justify-center rounded-full border transition hover:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700';
+const neutralButton = `${iconButton} border-slate-200 bg-white text-slate-700 hover:border-slate-400 hover:bg-slate-100`;
 
 function getPageTitle() {
   return document.querySelector<HTMLMetaElement>('meta[property="og:title"]')?.content || document.title;
@@ -66,20 +68,54 @@ export default function SharePage({ path }: { path: string }) {
   return (
     <div role="group" aria-label="Compartir este enlace">
       <div className="flex flex-wrap gap-2">
-        <a href={`https://wa.me/?text=${encodedUrl}`} target="_blank" rel="noopener noreferrer" className={optionClass} onClick={shareByWhatsApp}>
-          WhatsApp
+        <a
+          href={`https://wa.me/?text=${encodedUrl}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="WhatsApp"
+          title="WhatsApp"
+          className={`${iconButton} border-emerald-200 bg-emerald-50 text-emerald-800 hover:bg-emerald-100`}
+          onClick={shareByWhatsApp}
+        >
+          <ShareIcon name="whatsapp" />
         </a>
-        <a href={`mailto:?body=${encodedUrl}`} className={optionClass} onClick={shareByEmail}>
-          Correo electrónico
+        <a
+          href={`mailto:?body=${encodedUrl}`}
+          aria-label="Correo electrónico"
+          title="Correo electrónico"
+          className={neutralButton}
+          onClick={shareByEmail}
+        >
+          <ShareIcon name="envelope" />
         </a>
-        <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`} target="_blank" rel="noopener noreferrer" className={optionClass}>
-          LinkedIn
+        <a
+          href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="LinkedIn"
+          title="LinkedIn"
+          className={`${iconButton} border-sky-200 bg-sky-50 text-sky-800 hover:bg-sky-100`}
+        >
+          <ShareIcon name="linkedin" />
         </a>
-        <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`} target="_blank" rel="noopener noreferrer" className={optionClass}>
-          Facebook
+        <a
+          href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Facebook"
+          title="Facebook"
+          className={`${iconButton} border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100`}
+        >
+          <ShareIcon name="facebook" />
         </a>
-        <button type="button" className={optionClass} onClick={copyLink}>Copiar enlace</button>
-        {canShare && <button type="button" className={optionClass} onClick={shareWithDevice}>Más opciones</button>}
+        <button type="button" aria-label="Copiar enlace" title="Copiar enlace" className={neutralButton} onClick={copyLink}>
+          <ShareIcon name="link-45deg" />
+        </button>
+        {canShare && (
+          <button type="button" aria-label="Más opciones" title="Más opciones" className={neutralButton} onClick={shareWithDevice}>
+            <ShareIcon name="share" />
+          </button>
+        )}
       </div>
       {manualCopy && (
         <input
