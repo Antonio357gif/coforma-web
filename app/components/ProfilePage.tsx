@@ -13,9 +13,22 @@ export default function ProfilePage({ profile }: { profile: (typeof profiles)[nu
         <section className="mt-8 max-w-3xl rounded-2xl border border-slate-200 bg-white p-6">
           <h2 className="text-xl font-bold">{profile.example.title}</h2>
           <p className="mt-3 leading-7 text-slate-700">{profile.example.body}</p>
-          <Link href={profile.example.video.path} className="mt-3 inline-flex min-h-11 items-center font-semibold text-emerald-800 underline">
-            {profile.example.video.label}
-          </Link>
+          {profile.example.steps && (
+            <ol className="mt-4 list-decimal space-y-4 pl-5 leading-7 text-slate-700 marker:font-semibold">
+              {profile.example.steps.map((step) => (
+                <li key={step.title}>
+                  <h3 className="font-semibold text-slate-950">{step.title}</h3>
+                  <p>{step.body}</p>
+                </li>
+              ))}
+            </ol>
+          )}
+          <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
+            <Link href={profile.example.video.path} className="inline-flex min-h-11 items-center font-semibold text-emerald-800 underline">
+              {profile.example.video.label}
+            </Link>
+            {profile.example.showDemo && <DemoLink />}
+          </div>
         </section>
       )}
       <section className="mt-8">
@@ -24,7 +37,7 @@ export default function ProfilePage({ profile }: { profile: (typeof profiles)[nu
           {profile.modules.map(([title, path]) => <Link key={path} href={path} className={cardClass}>{title} →</Link>)}
         </div>
       </section>
-      <div className="mt-8"><DemoLink /></div>
+      {!profile.example?.showDemo && <div className="mt-8"><DemoLink /></div>}
     </ContentPage>
   );
 }
