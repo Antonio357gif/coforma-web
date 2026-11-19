@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: ModulePageProps) {
   const { slug } = await params;
   const feature = modules.find((item) => item.slug === slug);
   if (!feature) notFound();
-  return pageMetadata(feature.title + ' en academias FPE', feature.body, `/modulos/${slug}`);
+  return pageMetadata(feature.title + ' en academias FPE', feature.body, `/modulos/${slug}`, feature.image);
 }
 
 export default async function ModulePage({ params }: ModulePageProps) {

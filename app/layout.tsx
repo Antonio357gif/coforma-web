@@ -3,7 +3,12 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteFooter, SiteHeader } from "./components/SiteShell";
 import CookieNotice from "./components/CookieNotice";
-import { siteUrl } from "./data/seo";
+import { SiteShare } from "./components/SharePage";
+import { publicPagePaths } from "./data/pages";
+import { pageMetadata, siteUrl } from "./data/seo";
+
+const siteTitle = "Coforma | CRM Integral FPE para academias";
+const siteDescription = "Plataforma integral para la gestión de formación, alumnado y convocatorias FPE.";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,11 +21,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  ...pageMetadata(siteTitle, siteDescription, "/"),
   metadataBase: new URL(siteUrl),
-  alternates: { canonical: "/" },
-  title: { default: "Coforma | CRM Integral FPE para academias", template: "%s | Coforma" },
-  description:
-    "Plataforma integral para la gestión de formación, alumnado y convocatorias FPE.",
+  title: { default: siteTitle, template: "%s | Coforma" },
 };
 
 export const viewport: Viewport = {
@@ -37,7 +40,10 @@ export default function RootLayout({
     <html lang="es">
       <body className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col bg-slate-50 text-slate-900 antialiased`}>
         <SiteHeader />
-        <main className="grow">{children}</main>
+        <main className="grow">
+          {children}
+          <SiteShare pagePaths={publicPagePaths} />
+        </main>
         <SiteFooter />
         <CookieNotice />
       </body>

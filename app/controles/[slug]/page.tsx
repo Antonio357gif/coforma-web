@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: ControlPageProps) {
   const { slug } = await params;
   const control = operationalControls.find((item) => item.slug === slug);
   if (!control) notFound();
-  return pageMetadata(control.title, control.body, `/controles/${slug}`);
+  return pageMetadata(control.title, control.body, `/controles/${slug}`, control.image);
 }
 
 export default async function ControlPage({ params }: ControlPageProps) {
