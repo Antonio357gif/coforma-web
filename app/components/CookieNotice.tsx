@@ -75,7 +75,7 @@ export default function CookieNotice() {
               <button
                 type="button"
                 onClick={() => saveCookieChoice('accepted', true)}
-                className="rounded-xl bg-emerald-600 px-4 py-2 text-[12px] font-extrabold text-white transition hover:bg-emerald-700"
+                className="rounded-xl bg-emerald-700 px-4 py-2 text-[12px] font-extrabold text-white transition hover:bg-emerald-800"
               >
                 Aceptar
               </button>
@@ -128,7 +128,7 @@ export default function CookieNotice() {
             <button
               type="button"
               onClick={() => saveCookieChoice('configured', analyticsCookies)}
-              className="rounded-xl bg-emerald-600 px-4 py-2 text-[12px] font-extrabold text-white transition hover:bg-emerald-700"
+              className="rounded-xl bg-emerald-700 px-4 py-2 text-[12px] font-extrabold text-white transition hover:bg-emerald-800"
             >
               Guardar configuración
             </button>

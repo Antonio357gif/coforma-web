@@ -19,7 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         thumbnail_loc: new URL(videoThumbnail(video.slug), siteUrl).href,
         content_loc: new URL(video.file, siteUrl).href,
         duration: videoSeconds(video.duration),
-        publication_date: video.search.publishedOn,
+        publication_date: video.search.uploadedAt,
         tag: video.search.phrase,
       }],
     };

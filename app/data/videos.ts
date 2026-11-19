@@ -11,7 +11,7 @@ type Video = {
     title: string;
     description: string;
     phrase: string;
-    publishedOn: string;
+    uploadedAt: string;
     topics: string[];
     related: { href: string; label: string }[];
   };
@@ -31,7 +31,7 @@ export const demoVideos: Video[] = [
       title: 'Demo de un CRM para academias de formación FPE',
       description: 'Ve cómo funciona el CRM de Coforma para academias: captación de alumnos, matrículas, planificación de cursos, calificaciones y expediente académico.',
       phrase: 'demo de CRM para academias de formación',
-      publishedOn: '2026-11-18',
+      uploadedAt: '2026-11-18T11:10:10Z',
       topics: [
         'Busca un curso disponible y sigue las solicitudes de información hasta la matrícula.',
         'Planifica fechas, horarios, aulas y docentes y abre los cursos que están en marcha.',
@@ -57,7 +57,7 @@ export const demoVideos: Video[] = [
       title: 'Cuadro de mando para grupos de academias',
       description: 'Consulta los indicadores de varias academias desde un solo panel: captación, alumnado activo, matrículas y cursos por sede y convocatoria.',
       phrase: 'cuadro de mando para grupos de academias',
-      publishedOn: '2026-11-18',
+      uploadedAt: '2026-11-18T11:10:10Z',
       topics: [
         'Consulta la actividad de una red de siete academias en tres islas con los datos de la demo.',
         'Compara captación, alumnado activo y matrículas entre centros y revisa la oferta por convocatoria.',
@@ -82,7 +82,7 @@ export const operationalControlsVideo: Video = {
     title: 'Control de duplicados y solapamientos en academias',
     description: 'Ve cómo detectar contactos duplicados y llamadas repetidas, revisar solapamientos de aulas y docentes y dar seguimiento a las tareas del equipo.',
     phrase: 'control de duplicados y solapamientos en academias',
-    publishedOn: '2026-11-18',
+    uploadedAt: '2026-11-18T15:56:09Z',
     topics: [
       'Recupera la ficha de un contacto existente y revisa el historial antes de volver a llamarlo.',
       'Revisa los avisos de solapamiento de horarios, aulas y docentes al planificar un curso.',
@@ -107,7 +107,7 @@ export const personalMessageVideo: Video = {
     title: 'CRM para academias de Canarias: mensaje de Antonio',
     description: 'Antonio Barragán, fundador de Coforma, presenta su CRM desarrollado en Canarias y explica qué valorar antes de elegir un programa de gestión para una academia.',
     phrase: 'CRM para academias de Canarias',
-    publishedOn: '2026-11-18',
+    uploadedAt: '2026-11-18T20:36:15Z',
     topics: [
       'Conoce el proyecto de Coforma de la mano de Antonio Barragán, docente de FPE y fundador.',
       'Valora cuánto trabajo seguirá haciendo a mano tu equipo al comparar programas de gestión.',

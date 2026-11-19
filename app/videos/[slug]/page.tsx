@@ -24,7 +24,7 @@ export default async function VideoPage({ params }: VideoPageProps) {
   const { slug } = await params;
   const video = videos.find((item) => item.slug === slug);
   if (!video) notFound();
-  const { title, description, phrase, publishedOn, topics, related } = video.search;
+  const { title, description, phrase, uploadedAt, topics, related } = video.search;
   const thumbnail = videoThumbnail(slug);
   const videoData = {
     '@context': 'https://schema.org',
@@ -32,7 +32,7 @@ export default async function VideoPage({ params }: VideoPageProps) {
     name: title,
     description,
     thumbnailUrl: new URL(thumbnail, siteUrl).href,
-    uploadDate: publishedOn,
+    uploadDate: uploadedAt,
     duration: `PT${videoSeconds(video.duration)}S`,
     contentUrl: new URL(video.file, siteUrl).href,
     url: new URL(videoPath(slug), siteUrl).href,

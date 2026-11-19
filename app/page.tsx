@@ -135,7 +135,7 @@ export default function Home() {
 
           <div className="mt-5 flex flex-wrap justify-center gap-3">
             <Link href="/contacto"
-              className="inline-block rounded-2xl bg-emerald-600 px-6 py-3 text-[15px] font-extrabold text-white shadow-[0_14px_34px_rgba(16,185,129,0.20)] transition hover:bg-emerald-700"
+              className="inline-block rounded-2xl bg-emerald-700 px-6 py-3 text-[15px] font-extrabold text-white shadow-[0_14px_34px_rgba(16,185,129,0.20)] transition hover:bg-emerald-800"
             >
               Solicitar demo
             </Link>
