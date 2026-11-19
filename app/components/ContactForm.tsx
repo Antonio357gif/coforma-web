@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
 
 const inputClass = 'mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 focus-visible:outline-2 focus-visible:outline-emerald-700';
 const fields = [
@@ -13,24 +13,35 @@ const fields = [
 
 export default function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'failed'>('idle');
+  const pending = useRef<{ payload: string; requestId: string } | null>(null);
+  const sending = useRef(false);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (status === 'sending') return;
+    if (sending.current) return;
     const form = event.currentTarget;
+    sending.current = true;
     setStatus('sending');
 
     try {
+      const fields = Object.fromEntries(new FormData(form));
+      const payload = JSON.stringify(fields);
+      if (pending.current?.payload !== payload) {
+        pending.current = { payload, requestId: crypto.randomUUID() };
+      }
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+        body: JSON.stringify({ ...fields, requestId: pending.current.requestId }),
       });
       if (!response.ok || !(await response.json()).ok) throw new Error('Solicitud no enviada');
+      pending.current = null;
       form.reset();
       setStatus('sent');
     } catch {
       setStatus('failed');
+    } finally {
+      sending.current = false;
     }
   }
 
