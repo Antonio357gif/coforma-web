@@ -1,11 +1,26 @@
-export const profiles = [
+type TrainingProfile = {
+  path: string;
+  title: string;
+  label: string;
+  intro: string;
+  tasks: string[];
+  modules: [label: string, path: string][];
+  example?: { title: string; body: string; video: { label: string; path: string } };
+};
+
+export const profiles: TrainingProfile[] = [
   {
     path: '/academias',
     title: 'Software de gestión para academias de formación',
     label: 'Dirección de academia',
-    intro: 'Organiza el trabajo de captación, administración y coordinación desde la primera solicitud hasta el seguimiento académico.',
-    tasks: ['Consulta qué personas están pendientes de contacto y cuáles avanzan a matrícula.', 'Vincula las inscripciones con el curso, la convocatoria y la sede correspondiente.', 'Revisa el estado de los cursos y las prioridades del equipo antes de la siguiente jornada.'],
-    modules: [['Captación', '/modulos/captacion'], ['Matrículas', '/modulos/matriculas'], ['Alumnado', '/modulos/alumnado']],
+    intro: 'Gestiona alumnos, matrículas, horarios y notas con un programa para academias de Formación Profesional para el Empleo (FPE). El equipo puede seguir cada solicitud desde el primer contacto hasta el expediente académico.',
+    tasks: ['Consulta qué personas están pendientes de contacto y cuáles avanzan a matrícula.', 'Vincula las inscripciones con el curso, la convocatoria y la sede correspondiente.', 'Organiza el calendario con sus aulas y docentes y revisa la asistencia y las calificaciones del alumnado.'],
+    modules: [['Registrar solicitudes de información', '/modulos/captacion'], ['Gestionar matrículas', '/modulos/matriculas'], ['Planificar aulas, docentes y horarios', '/modulos/planificacion'], ['Consultar asistencia y calificaciones', '/modulos/alumnado']],
+    example: {
+      title: 'De la primera solicitud al expediente académico',
+      body: 'En la demo, una persona pregunta por un curso. El equipo comprueba la oferta, registra el contacto y formaliza la matrícula. Una vez iniciado el curso, puede consultar las calificaciones, el estado del acta y la documentación pendiente del expediente.',
+      video: { label: 'Ver el recorrido completo del CRM', path: '/videos/recorrido-crm' },
+    },
   },
   {
     path: '/coordinacion-formativa',
@@ -17,10 +32,15 @@ export const profiles = [
   },
   {
     path: '/grupos-de-formacion',
-    title: 'Software para grupos y redes de academias',
+    title: 'Software para gestionar varias academias',
     label: 'Grupos de formación',
-    intro: 'Supervisa la actividad de varias academias y consulta los indicadores de captación, alumnado y oferta en el contexto de tu red.',
+    intro: 'Gestiona varias academias desde una sola plataforma. Consulta los indicadores de captación, alumnado y oferta del grupo y abre el detalle de cada sede cuando necesites intervenir.',
     tasks: ['Consulta la actividad de distintas academias relacionadas con tu grupo.', 'Organiza el acceso de los equipos con los perfiles previstos en el CRM.', 'Abre el detalle desde los indicadores para revisar dónde hace falta intervenir.'],
     modules: [['Panel de control', '/modulos/panel-de-control'], ['Comunicación interna', '/modulos/comunicacion-interna'], ['Trazabilidad', '/controles/trazabilidad']],
+    example: {
+      title: 'Cómo coordinar una red de academias',
+      body: 'La demostración reúne siete academias en tres islas. Dirección puede consultar la actividad de la red y, desde el panel, abrir el listado de captación para revisar las gestiones que requieren atención.',
+      video: { label: 'Ver el cuadro de mando de una red de academias', path: '/videos/dashboard-ejecutivo' },
+    },
   },
 ];

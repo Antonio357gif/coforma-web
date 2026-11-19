@@ -20,14 +20,14 @@ export default function Home() {
         <div className="rounded-[30px] border border-slate-200 bg-white/72 p-6 shadow-[0_18px_58px_rgba(15,23,42,0.10)] backdrop-blur sm:p-8">
           <div className="grid items-center gap-7 lg:grid-cols-[0.95fr_1.05fr]">
             <div className="max-w-[590px]">
-              <p className="text-sm font-semibold text-emerald-800">CRM para academias y grupos de Formación Profesional para el Empleo</p>
+              <p className="text-sm font-semibold text-emerald-800">Todo el flujo formativo, conectado y bajo control</p>
 
               <h1 className="mt-4 text-balance text-3xl font-extrabold leading-[1.08] tracking-tight text-slate-950 sm:text-4xl xl:text-5xl">
-                Todo el <span className="text-emerald-700">flujo formativo</span>, conectado y bajo control
+                Software de gestión para <span className="text-emerald-700">centros de formación para el empleo</span>
               </h1>
 
               <p className="mt-4 max-w-xl text-base leading-7 text-slate-700 sm:text-lg">
-                Gestiona la captación, las matrículas y la planificación en un mismo CRM. Sigue la actividad de cada curso hasta el expediente académico.
+                Gestiona las solicitudes de información, las matrículas, los horarios, la asistencia, las calificaciones y el expediente del alumnado en un solo CRM. Coforma está desarrollado en Canarias para academias y grupos de Formación Profesional para el Empleo (FPE).
               </p>
 
               <div className="mt-6 flex flex-wrap items-center gap-3">

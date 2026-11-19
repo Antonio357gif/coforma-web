@@ -7,8 +7,8 @@ import { SiteShare } from "./components/SharePage";
 import { publicPagePaths } from "./data/pages";
 import { pageMetadata, siteUrl } from "./data/seo";
 
-const siteTitle = "Coforma | CRM Integral FPE para academias";
-const siteDescription = "Plataforma integral para la gestión de formación, alumnado y convocatorias FPE.";
+const siteTitle = "CRM para academias y centros de formación FPE | Coforma";
+const siteDescription = "Software de gestión para academias de FPE. Gestiona la captación, las matrículas, la planificación, las calificaciones y los expedientes con Coforma.";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

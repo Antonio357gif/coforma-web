@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: ModulePageProps) {
   const { slug } = await params;
   const feature = modules.find((item) => item.slug === slug);
   if (!feature) notFound();
-  return pageMetadata(feature.title + ' en academias FPE', feature.body, `/modulos/${slug}`, feature.image);
+  return pageMetadata(feature.searchTitle ?? feature.title + ' en academias FPE', feature.body, `/modulos/${slug}`, feature.image);
 }
 
 export default async function ModulePage({ params }: ModulePageProps) {
@@ -39,6 +39,20 @@ export default async function ModulePage({ params }: ModulePageProps) {
         </section>
         <Screenshot src={feature.image} title={feature.title} />
       </div>
+      {feature.examples && (
+        <section className="mt-8" aria-labelledby="ejemplos-alumnado">
+          <h2 id="ejemplos-alumnado" className="text-xl font-bold text-slate-950">Asistencia, notas y evaluación del alumnado</h2>
+          <div className="mt-4 grid gap-6 lg:grid-cols-2">
+            {feature.examples.map((example) => (
+              <div key={example.image} className="space-y-3">
+                <h3 className="font-bold text-slate-950">{example.title}</h3>
+                <p className="leading-7 text-slate-700">{example.body}</p>
+                <Screenshot src={example.image} title={example.title} />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
       <nav aria-label="Módulos del flujo formativo" className="mt-8 flex flex-wrap gap-4 border-t border-slate-200 pt-5 text-sm font-semibold text-emerald-800">
         {previous && <Link href={`/modulos/${previous.slug}`}>← {previous.title}</Link>}
         <Link href="/modulos">Todos los módulos</Link>

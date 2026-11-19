@@ -2,8 +2,8 @@ export const flowModules = [
   {
     number: '01',
     slug: 'captacion',
-    title: 'Captación de personas',
-    body: 'Registra solicitudes, oportunidades y primeros contactos desde una vista operativa.',
+    title: 'Captación y seguimiento de interesados para academias',
+    body: 'Gestiona las solicitudes de información de tu academia en un CRM. Consulta qué cursos interesan a cada persona y qué contacto o cita queda pendiente.',
     image: '/slides/01-captacion-personas.png',
   },
   {
@@ -16,15 +16,15 @@ export const flowModules = [
   {
     number: '03',
     slug: 'matriculas',
-    title: 'Matrículas',
-    body: 'Formaliza inscripciones vinculadas a acción formativa, convocatoria y academia.',
+    title: 'Gestión de matrículas para academias',
+    body: 'Convierte las solicitudes en matrículas y consulta a qué curso, convocatoria y academia corresponde cada inscripción.',
     image: '/slides/03-matriculas.png',
   },
   {
     number: '04',
     slug: 'alumnado',
-    title: 'Alumnado',
-    body: 'Centraliza la ficha, el estado y el histórico formativo de cada alumno.',
+    title: 'Gestión del alumnado y calificaciones en cursos FPE',
+    body: 'Consulta las fichas del alumnado, su asistencia, las notas de cada curso y el estado de las actas y expedientes académicos.',
     image: '/slides/04-alumnado.png',
   },
   {
@@ -37,8 +37,8 @@ export const flowModules = [
   {
     number: '06',
     slug: 'planificacion',
-    title: 'Planificación',
-    body: 'Coordina aulas, docentes, fechas, horarios y recursos desde una vista común.',
+    title: 'Planificación de cursos, aulas, docentes y horarios',
+    body: 'Organiza los cursos de tu centro de formación en un calendario común. Asigna fechas, aulas y docentes y revisa los avisos de solapamiento.',
     image: '/slides/06-planificacion.png',
   },
   {
@@ -64,8 +64,14 @@ export const flowModules = [
   },
 ] as const;
 
-const moduleDetails = {
+const moduleDetails: Record<(typeof flowModules)[number]['slug'], {
+  problem: string;
+  workflow: string[];
+  searchTitle?: string;
+  examples?: { title: string; body: string; image: string }[];
+}> = {
   captacion: {
+    searchTitle: 'CRM de captación de alumnos para academias',
     problem: 'Las solicitudes llegan por distintos canales y una misma persona puede hablar con más de un miembro del equipo.',
     workflow: ['Registra el primer contacto y la solicitud en la ficha de la persona.', 'Consulta los contactos anteriores antes de abrir un seguimiento.', 'Pasa a seguimiento cuando la persona necesita orientación o una nueva llamada.'],
   },
@@ -74,18 +80,33 @@ const moduleDetails = {
     workflow: ['Consulta el estado de cada persona dentro del flujo.', 'Recupera las gestiones anteriores antes de contactar de nuevo.', 'Deriva a otra oferta o continúa a matrícula cuando hay una acción adecuada.'],
   },
   matriculas: {
+    searchTitle: 'Gestión de matrículas para academias',
     problem: 'Una inscripción necesita identificar a la persona, la formación que va a cursar y el centro que se hace cargo.',
     workflow: ['Selecciona la persona y la acción formativa correspondiente.', 'Revisa la convocatoria y la academia vinculadas a la inscripción.', 'Usa la matrícula para consultar la evolución del alumno durante el curso.'],
   },
   alumnado: {
+    searchTitle: 'Gestión de alumnos, asistencia y notas en cursos FPE',
     problem: 'Coordinación y administración necesitan encontrar el historial de una persona sin recomponerlo desde varias listas de cursos.',
-    workflow: ['Abre la ficha individual del alumno.', 'Consulta su estado y las acciones formativas vinculadas.', 'Recupera su historial cuando necesites revisar el recorrido académico.'],
+    workflow: ['Abre la ficha individual del alumno y consulta sus cursos e historial.', 'Revisa la asistencia y los resultados de evaluación desde el curso.', 'Consulta el estado del acta y abre el expediente para revisar anexos, plazos y documentos pendientes.'],
+    examples: [
+      {
+        title: 'Calificaciones y actas por curso',
+        body: 'En la vista de ejemplo se consultan la nota media, el número de personas aptas y no aptas y el estado del acta. En los certificados profesionales la consulta llega a los módulos y unidades evaluables.',
+        image: '/slides/calificaciones-cursos-fpe.webp',
+      },
+      {
+        title: 'Documentación del expediente académico',
+        body: 'En el ejemplo del curso se muestran los anexos previstos y su estado. El equipo puede abrir el expediente para distinguir qué información ya está disponible y qué sigue pendiente antes del cierre.',
+        image: '/slides/expediente-academico-fpe.webp',
+      },
+    ],
   },
   'oferta-formativa': {
     problem: 'El equipo de captación necesita saber qué formación puede ofrecer y coordinación necesita saber qué acciones debe preparar.',
     workflow: ['Identifica la acción formativa y su convocatoria.', 'Consulta la oferta junto a las acciones que ya están en marcha.', 'Lleva a planificación las acciones que tienen que organizarse antes de iniciar.'],
   },
   planificacion: {
+    searchTitle: 'Software para planificar cursos, aulas y horarios',
     problem: 'Asignar un curso requiere cruzar horarios, disponibilidad de aulas y docentes antes de confirmar el calendario.',
     workflow: ['Reúne fechas, horarios, aulas y docentes en la planificación.', 'Revisa los avisos de solapamiento al coordinar recursos compartidos.', 'Consulta los próximos arranques y las acciones que aún necesitan planificación.'],
   },
