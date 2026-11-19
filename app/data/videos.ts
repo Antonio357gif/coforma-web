@@ -78,6 +78,7 @@ export const operationalControlsVideo: Video = {
   duration: '1:14',
   file: '/videos/controles-operativos.mp4',
   homeSection: 'controles',
+  captions: '/videos/controles-operativos.vtt',
   search: {
     title: 'Control de duplicados y solapamientos en academias',
     description: 'Ve cómo detectar contactos duplicados y llamadas repetidas, revisar solapamientos de aulas y docentes y dar seguimiento a las tareas del equipo.',
@@ -103,6 +104,7 @@ export const personalMessageVideo: Video = {
   duration: '1:46',
   file: '/videos/presentacion-coforma.mp4',
   homeSection: 'contacto',
+  captions: '/videos/mensaje-personal-de-antonio.vtt',
   search: {
     title: 'CRM para academias de Canarias: mensaje de Antonio',
     description: 'Antonio Barragán, fundador de Coforma, presenta su CRM desarrollado en Canarias y explica qué valorar antes de elegir un programa de gestión para una academia.',
