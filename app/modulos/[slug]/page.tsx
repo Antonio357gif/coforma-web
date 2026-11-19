@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import ContentPage, { DemoLink } from '../../components/ContentPage';
+import ContentPage from '../../components/ContentPage';
+import { operationalControls } from '../../data/controls';
 import Screenshot from '../../components/Screenshot';
 import { modules } from '../../data/modules';
 import { pageMetadata } from '../../data/seo';
@@ -26,6 +27,7 @@ export default async function ModulePage({ params }: ModulePageProps) {
   if (!feature) notFound();
   const previous = modules[index - 1];
   const next = modules[index + 1];
+  const relatedControls = operationalControls.filter((control) => control.moduleSlug === slug);
 
   return (
     <ContentPage title={feature.title} intro={feature.body}>
@@ -35,7 +37,9 @@ export default async function ModulePage({ params }: ModulePageProps) {
           <p>{feature.problem}</p>
           <h2 className="text-xl font-bold text-slate-950">Cómo se usa en Coforma</h2>
           <ol className="list-decimal space-y-2 pl-5">{feature.workflow.map((step) => <li key={step}>{step}</li>)}</ol>
-          <DemoLink />
+          {relatedControls.map((control) => (
+            <Link key={control.slug} href={`/controles/${control.slug}`} className="block font-semibold text-emerald-800 underline">{control.title}</Link>
+          ))}
         </section>
         <Screenshot src={feature.image} title={feature.title} />
       </div>
@@ -44,7 +48,7 @@ export default async function ModulePage({ params }: ModulePageProps) {
           <h2 id="ejemplos-alumnado" className="text-xl font-bold text-slate-950">Asistencia, notas y evaluación del alumnado</h2>
           <div className="mt-4 grid gap-6 lg:grid-cols-2">
             {feature.examples.map((example) => (
-              <div key={example.image} className="space-y-3">
+              <div key={example.image} id={example.id} className="scroll-mt-5 space-y-3">
                 <h3 className="font-bold text-slate-950">{example.title}</h3>
                 <p className="leading-7 text-slate-700">{example.body}</p>
                 <Screenshot src={example.image} title={example.title} />

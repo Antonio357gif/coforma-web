@@ -116,6 +116,7 @@ export const personalMessageVideo: Video = {
     ],
     related: [
       { href: '/academias', label: 'Qué puedes gestionar con Coforma en tu academia' },
+      { href: '/quienes-somos', label: 'Conocer el origen de Coforma' },
       { href: '/videos/recorrido-crm', label: 'Ver la demostración del CRM de formación' },
     ],
   },

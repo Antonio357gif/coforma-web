@@ -36,7 +36,7 @@ export function SiteHeader() {
       </nav>
       <div className="flex items-center gap-3 text-sm font-semibold">
         <a href="https://app.coforma.es/login" className="text-emerald-800 hover:underline">Área clientes</a>
-        <Link href="/contacto" className="rounded-full bg-slate-900 px-3 py-2 text-white hover:bg-slate-700">Solicitar demo</Link>
+        <Link href="/contacto" className="text-slate-700 hover:text-emerald-800 hover:underline">Contacto</Link>
       </div>
     </header>
   );

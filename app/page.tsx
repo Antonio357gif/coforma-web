@@ -27,7 +27,7 @@ export default function Home() {
               </h1>
 
               <p className="mt-4 max-w-xl text-base leading-7 text-slate-700 sm:text-lg">
-                Gestiona las solicitudes de información, las matrículas, los horarios, la asistencia, las calificaciones y el expediente del alumnado en un solo CRM. Coforma está desarrollado en Canarias para academias y grupos de Formación Profesional para el Empleo (FPE).
+                Gestiona las solicitudes de información, las matrículas, los horarios, la asistencia, las calificaciones y el expediente del alumnado en un solo CRM. <Link href="/acerca-de" className="font-semibold text-emerald-800 underline">Coforma</Link> está desarrollado en Canarias para academias y grupos de Formación Profesional para el Empleo (FPE).
               </p>
 
               <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -125,20 +125,14 @@ export default function Home() {
       <section id="contacto" className="mx-auto max-w-6xl px-5 pb-10 sm:px-6">
         <div className="rounded-[30px] border border-emerald-200 bg-emerald-50/70 p-6 text-center shadow-[0_16px_48px_rgba(15,23,42,0.07)] sm:p-7">
           <h2 className="text-[22px] font-extrabold tracking-tight text-slate-950">
-            ¿Quieres ver Coforma aplicado a tu academia?
+            Conoce a Antonio, fundador de Coforma
           </h2>
 
           <p className="mx-auto mt-3 max-w-[620px] text-[14px] leading-6 text-slate-700">
-            Solicita una demo y revisamos contigo cómo encaja la plataforma en tu flujo
-            de captación, matrícula, planificación y seguimiento.
+            Antonio cuenta por qué creó Coforma y qué conviene valorar al elegir un programa de gestión para tu academia.
           </p>
 
           <div className="mt-5 flex flex-wrap justify-center gap-3">
-            <Link href="/contacto"
-              className="inline-block rounded-2xl bg-emerald-700 px-6 py-3 text-[15px] font-extrabold text-white shadow-[0_14px_34px_rgba(16,185,129,0.20)] transition hover:bg-emerald-800"
-            >
-              Solicitar demo
-            </Link>
             <Link href={videoPath(personalMessageVideo.slug)} className={videoLink}>
               <span aria-hidden="true">▶</span> {personalMessageVideo.title}
             </Link>

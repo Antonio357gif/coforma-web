@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import ContentPage, { DemoLink } from '../../components/ContentPage';
+import ContentPage from '../../components/ContentPage';
 import SharePage from '../../components/SharePage';
 import { pageMetadata, siteUrl } from '../../data/seo';
 import { videoPath, videoSeconds, videoThumbnail, videos } from '../../data/videos';
@@ -65,7 +65,6 @@ export default async function VideoPage({ params }: VideoPageProps) {
         {related.map(({ href, label }) => (
           <Link key={href} href={href} className="font-semibold text-emerald-800 underline">{label}</Link>
         ))}
-        <DemoLink />
       </div>
       <div className="mt-5 flex flex-wrap items-start gap-x-5 gap-y-3">
         <SharePage path={videoPath(slug)} />

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import ContentPage, { cardClass, DemoLink } from '../components/ContentPage';
+import ContentPage, { cardClass } from '../components/ContentPage';
 import { profiles } from '../data/profiles';
 import { pageMetadata } from '../data/seo';
 
@@ -21,7 +21,7 @@ export default function PlatformPage() {
           {profiles.map((profile) => <Link key={profile.path} href={profile.path} className={cardClass}><h3 className="font-bold">{profile.label}</h3><p className="mt-2 text-sm leading-6 text-slate-600">{profile.intro}</p></Link>)}
         </div>
       </section>
-      <div className="mt-8 flex flex-wrap items-center gap-5"><DemoLink /><Link href="/legal/privacidad" className="text-sm font-semibold text-emerald-800 underline">Política de privacidad</Link></div>
+      <div className="mt-8 flex flex-wrap items-center gap-5"><Link href="/videos/recorrido-crm" className="text-sm font-semibold text-emerald-800 underline">Ver el recorrido del CRM</Link><Link href="/legal/privacidad" className="text-sm font-semibold text-emerald-800 underline">Política de privacidad</Link></div>
     </ContentPage>
   );
 }

@@ -9,8 +9,10 @@ export const guides = [
       ['Revisa la inscripción antes de confirmarla', 'Comprueba la identidad de la persona, el curso concreto, la sede y la convocatoria que corresponde. Separa las solicitudes pendientes de las matrículas formalizadas para que administración y coordinación trabajen con el mismo estado.'],
       ['Usa una revisión semanal breve', 'Revisa los casos sin próxima acción y las solicitudes que pueden avanzar a un curso programado. Decide quién resuelve cada caso antes de cerrar la revisión.'],
     ],
-    related: '/modulos/captacion',
-    relatedLabel: 'Ver el módulo de captación',
+    related: [
+      { href: '/modulos/captacion', label: 'Registrar solicitudes en el módulo de captación' },
+      { href: '/modulos/matriculas', label: 'Cómo gestionar las matrículas' },
+    ],
   },
   {
     slug: 'planificar-aulas-docentes-y-horarios',
@@ -22,7 +24,9 @@ export const guides = [
       ['Confirma quién resuelve cada cruce', 'Cuando aparezca un solapamiento, deja anotado qué equipo puede ajustar el horario, cambiar de aula o confirmar otra asignación. Comunica el cambio a las personas afectadas una vez confirmado.'],
       ['Revisa los arranques de la próxima semana', 'Repasa los cursos que están a punto de comenzar y separa las decisiones resueltas de las que necesitan confirmación. Mantén esa revisión aunque el calendario general ya esté preparado.'],
     ],
-    related: '/modulos/planificacion',
-    relatedLabel: 'Ver el módulo de planificación',
+    related: [
+      { href: '/modulos/planificacion', label: 'Ver el módulo de planificación' },
+      { href: '/coordinacion-formativa#cursos-subvencionados', label: 'Cómo gestionar un curso subvencionado de principio a fin' },
+    ],
   },
 ];

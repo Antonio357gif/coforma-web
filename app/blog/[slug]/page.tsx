@@ -31,7 +31,9 @@ export default async function GuidePage({ params }: GuideProps) {
             <p className="mt-2 leading-7 text-slate-700">{body}</p>
           </section>
         ))}
-        <Link href={guide.related} className="inline-block font-semibold text-emerald-800 underline">{guide.relatedLabel} →</Link>
+        <div className="flex flex-wrap gap-x-6 gap-y-3">
+          {guide.related.map(({ href, label }) => <Link key={href} href={href} className="font-semibold text-emerald-800 underline">{label}</Link>)}
+        </div>
       </div>
     </ContentPage>
   );

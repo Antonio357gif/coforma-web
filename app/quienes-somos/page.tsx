@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import ContentPage, { DemoLink } from '../components/ContentPage';
+import ContentPage from '../components/ContentPage';
 import { pageMetadata } from '../data/seo';
 
 const title = 'Quiénes somos';
@@ -64,8 +64,7 @@ export default function AboutPage() {
       </section>
 
       <div className="mt-9 flex flex-wrap items-center gap-5">
-        <DemoLink />
-        <Link href="/demo" className="text-sm font-semibold text-emerald-800 underline">Ver Coforma en acción</Link>
+        <Link href="/videos/mensaje-personal-de-antonio" className="text-sm font-semibold text-emerald-800 underline">Ver el mensaje personal de Antonio</Link>
       </div>
     </ContentPage>
   );

@@ -68,7 +68,7 @@ const moduleDetails: Record<(typeof flowModules)[number]['slug'], {
   problem: string;
   workflow: string[];
   searchTitle?: string;
-  examples?: { title: string; body: string; image: string }[];
+  examples?: { id?: string; title: string; body: string; image: string }[];
 }> = {
   captacion: {
     searchTitle: 'CRM de captación de alumnos para academias',
@@ -95,6 +95,7 @@ const moduleDetails: Record<(typeof flowModules)[number]['slug'], {
         image: '/slides/calificaciones-cursos-fpe.webp',
       },
       {
+        id: 'expediente-academico',
         title: 'Documentación del expediente académico',
         body: 'En el ejemplo del curso se muestran los anexos previstos y su estado. El equipo puede abrir el expediente para distinguir qué información ya está disponible y qué sigue pendiente antes del cierre.',
         image: '/slides/expediente-academico-fpe.webp',

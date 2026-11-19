@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import ContentPage, { DemoLink, cardClass } from '../components/ContentPage';
+import ContentPage, { cardClass } from '../components/ContentPage';
 import Screenshot from '../components/Screenshot';
 import { pageMetadata } from '../data/seo';
 
@@ -36,7 +36,6 @@ export default function AboutProductPage() {
         </div>
       </section>
       <div className="mt-9 flex flex-wrap items-center gap-5">
-        <DemoLink />
         <Link href="/quienes-somos" className="text-sm font-semibold text-emerald-800 underline">Quiénes somos, misión y valores</Link>
       </div>
     </ContentPage>

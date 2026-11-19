@@ -10,7 +10,7 @@ export default function ProfilePage({ profile }: { profile: (typeof profiles)[nu
         <ul className="mt-3 list-disc space-y-2 pl-5 leading-7 text-slate-700">{profile.tasks.map((task) => <li key={task}>{task}</li>)}</ul>
       </section>
       {profile.example && (
-        <section className="mt-8 max-w-3xl rounded-2xl border border-slate-200 bg-white p-6">
+        <section id={profile.example.id} className="mt-8 max-w-3xl scroll-mt-5 rounded-2xl border border-slate-200 bg-white p-6">
           <h2 className="text-xl font-bold">{profile.example.title}</h2>
           <p className="mt-3 leading-7 text-slate-700">{profile.example.body}</p>
           {profile.example.steps && (
@@ -19,6 +19,7 @@ export default function ProfilePage({ profile }: { profile: (typeof profiles)[nu
                 <li key={step.title}>
                   <h3 className="font-semibold text-slate-950">{step.title}</h3>
                   <p>{step.body}</p>
+                  <Link href={step.link.path} className="text-sm font-semibold text-emerald-800 underline">{step.link.label}</Link>
                 </li>
               ))}
             </ol>
@@ -37,7 +38,6 @@ export default function ProfilePage({ profile }: { profile: (typeof profiles)[nu
           {profile.modules.map(([title, path]) => <Link key={path} href={path} className={cardClass}>{title} →</Link>)}
         </div>
       </section>
-      {!profile.example?.showDemo && <div className="mt-8"><DemoLink /></div>}
     </ContentPage>
   );
 }

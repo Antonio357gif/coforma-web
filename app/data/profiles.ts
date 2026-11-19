@@ -6,9 +6,10 @@ type TrainingProfile = {
   tasks: string[];
   modules: [label: string, path: string][];
   example?: {
+    id?: string;
     title: string;
     body: string;
-    steps?: { title: string; body: string }[];
+    steps?: { title: string; body: string; link: { label: string; path: string } }[];
     video: { label: string; path: string };
     showDemo?: boolean;
   };
@@ -36,24 +37,29 @@ export const profiles: TrainingProfile[] = [
     tasks: ['Localiza las acciones de la oferta pendientes de organizar.', 'Contrasta recursos y horarios con los avisos de solapamiento.', 'Distingue próximos arranques, cursos activos y cursos finalizados al coordinar al equipo.'],
     modules: [['Oferta formativa', '/modulos/oferta-formativa'], ['Planificación', '/modulos/planificacion'], ['Cursos en ejecución', '/modulos/cursos-en-ejecucion']],
     example: {
+      id: 'cursos-subvencionados',
       title: 'Cómo gestionar cursos subvencionados en tu academia',
       body: 'Imagina que tu academia va a impartir un curso subvencionado. Con Coforma puedes coordinar el trabajo desde las primeras solicitudes hasta la revisión del expediente académico.',
       steps: [
         {
           title: 'Organiza las solicitudes y matrículas',
           body: 'Registra a las personas interesadas y comprueba qué matrículas se han formalizado. Cada matrícula queda vinculada al curso, la sede y la convocatoria.',
+          link: { label: 'Cómo gestionar las matrículas', path: '/modulos/matriculas' },
         },
         {
           title: 'Prepara el calendario del curso',
           body: 'Asigna horarios, aulas y docentes. Revisa los avisos de solapamiento antes de cerrar la planificación.',
+          link: { label: 'Cómo detectar solapamientos de aulas y docentes', path: '/controles/alarmas-de-planificacion' },
         },
         {
           title: 'Haz seguimiento de la asistencia y la evaluación',
           body: 'Durante el curso, consulta la asistencia y las calificaciones de cada alumno para saber qué queda por revisar.',
+          link: { label: 'Consultar asistencia y calificaciones', path: '/modulos/alumnado' },
         },
         {
           title: 'Revisa el expediente antes del cierre',
           body: 'Consulta el estado del acta y comprueba qué documentos y anexos del expediente académico siguen pendientes.',
+          link: { label: 'Ver un ejemplo de expediente académico', path: '/modulos/alumnado#expediente-academico' },
         },
       ],
       video: { label: 'Ver el recorrido del CRM', path: '/videos/recorrido-crm' },
