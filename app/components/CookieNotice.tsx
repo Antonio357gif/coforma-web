@@ -1,13 +1,16 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useSyncExternalStore } from 'react';
+import { Suspense, useEffect, useState, useSyncExternalStore } from 'react';
 import { Analytics } from '@vercel/analytics/next';
 import Modal from './Modal';
+import GoogleAnalytics, { disableGoogleAnalytics } from './GoogleAnalytics';
 
 type CookieChoice = 'accepted' | 'rejected' | 'configured';
 
 const consentEvent = 'coforma:cookie-consent';
+const preferencesEvent = 'coforma:cookie-preferences';
+const analyticsVersion = '2';
 
 function subscribe(listener: () => void) {
   window.addEventListener(consentEvent, listener);
@@ -20,7 +23,19 @@ function subscribe(listener: () => void) {
 
 function readConsent() {
   if (!window.localStorage.getItem('coforma_cookie_choice')) return 'pending';
-  return window.localStorage.getItem('coforma_cookie_analytics') === 'true' ? 'analytics' : 'essential';
+  if (window.localStorage.getItem('coforma_cookie_analytics') !== 'true') return 'essential';
+  return window.localStorage.getItem('coforma_cookie_analytics_version') === analyticsVersion
+    ? 'analytics'
+    : 'legacy-analytics';
+}
+
+export function CookiePreferencesButton() {
+  return (
+    <button type="button" className="mt-2 font-bold text-emerald-700 hover:underline"
+      onClick={() => window.dispatchEvent(new Event(preferencesEvent))}>
+      Cambiar preferencias de cookies
+    </button>
+  );
 }
 
 export default function CookieNotice() {
@@ -28,8 +43,19 @@ export default function CookieNotice() {
   const [openCookieConfig, setOpenCookieConfig] = useState(false);
   const [analyticsCookies, setAnalyticsCookies] = useState(false);
 
+  useEffect(() => {
+    const openPreferences = () => {
+      setAnalyticsCookies(readConsent() === 'analytics');
+      setOpenCookieConfig(true);
+    };
+    window.addEventListener(preferencesEvent, openPreferences);
+    return () => window.removeEventListener(preferencesEvent, openPreferences);
+  }, []);
+
   function saveCookieChoice(choice: CookieChoice, analytics: boolean) {
+    if (!analytics) disableGoogleAnalytics();
     window.localStorage.setItem('coforma_cookie_analytics', String(analytics));
+    window.localStorage.setItem('coforma_cookie_analytics_version', analyticsVersion);
     window.localStorage.setItem('coforma_cookie_choice', choice);
     setOpenCookieConfig(false);
     window.dispatchEvent(new Event(consentEvent));
@@ -37,16 +63,19 @@ export default function CookieNotice() {
 
   return (
     <>
-      {consent === 'analytics' && <Analytics />}
-      {consent === 'pending' && (
+      {(consent === 'analytics' || consent === 'legacy-analytics') && <Analytics />}
+      {consent === 'analytics' && (
+        <Suspense fallback={null}><GoogleAnalytics /></Suspense>
+      )}
+      {(consent === 'pending' || consent === 'legacy-analytics') && (
         <div className="fixed inset-x-0 bottom-0 z-50 border-t border-slate-200 bg-white/95 px-4 py-4 shadow-[0_-14px_40px_rgba(15,23,42,0.12)] backdrop-blur">
           <div className="mx-auto flex max-w-6xl flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-3xl">
               <div className="text-[14px] font-extrabold text-slate-950">Uso de cookies</div>
               <p className="mt-1 text-[12px] leading-5 text-slate-600">
                 Utilizamos cookies técnicas necesarias para el funcionamiento de la web y,
-                si lo aceptas, podremos usar cookies o tecnologías analíticas para medir el uso
-                del sitio y mejorar Coforma.
+                si lo aceptas, usamos Google Analytics y Vercel Analytics para medir las visitas
+                y mejorar Coforma.
               </p>
               <Link href="/legal/cookies"
                 className="mt-1 text-[12px] font-bold text-emerald-700 hover:text-emerald-800"
@@ -111,7 +140,7 @@ export default function CookieNotice() {
               <span className="block font-extrabold text-slate-950">Cookies analíticas</span>
               <span className="mt-1 block text-slate-600">
                 Permiten medir el uso de la web para mejorar contenidos, rendimiento y experiencia.
-                Podrán incluir Google Analytics o Vercel Analytics cuando se activen.
+                Incluyen Google Analytics y Vercel Analytics.
               </span>
             </span>
           </label>

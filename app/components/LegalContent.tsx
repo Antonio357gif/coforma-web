@@ -1,3 +1,5 @@
+import { CookiePreferencesButton } from './CookieNotice';
+
 export type LegalTopic = 'aviso' | 'privacidad' | 'cookies';
 
 export default function LegalContent({ type }: { type: LegalTopic }) {
@@ -195,10 +197,8 @@ export default function LegalContent({ type }: { type: LegalTopic }) {
             una vez que el usuario ha aceptado, rechazado o configurado su elección.
           </p>
           <p className="mt-2">
-            La web puede incorporar próximamente herramientas de medición como Google Analytics
-            y Vercel Analytics. En caso de activarse cookies o tecnologías analíticas sujetas a
-            consentimiento, solo se utilizarán cuando el usuario haya aceptado o configurado
-            favorablemente dicha categoría.
+            La web usa Google Analytics 4 y Vercel Analytics para medir las visitas a
+            coforma.es cuando el usuario acepta la opción de analítica.
           </p>
         </section>
 
@@ -217,8 +217,9 @@ export default function LegalContent({ type }: { type: LegalTopic }) {
               <p className="font-extrabold text-slate-950">Analíticas o de medición</p>
               <p className="mt-1">
                 Permiten conocer de forma agregada cómo se utiliza la web para mejorar su contenido,
-                rendimiento y experiencia de usuario. Podrán incluir herramientas como Google
-                Analytics o Vercel Analytics si se activan posteriormente.
+                rendimiento y experiencia de usuario. Google Analytics usa las cookies
+                _ga y _ga_M7SDQFZ8Z4 para distinguir navegadores y mantener el estado de sesión.
+                Vercel Analytics complementa la medición de visitas.
               </p>
             </div>
           </div>
@@ -228,8 +229,9 @@ export default function LegalContent({ type }: { type: LegalTopic }) {
           <h3 className="text-[15px] font-extrabold text-slate-950">4. Cómo gestionar las cookies</h3>
           <p className="mt-2">
             El usuario puede aceptar, rechazar o configurar las cookies desde el banner inicial.
-            También puede borrar o bloquear cookies desde la configuración de su navegador.
+            También puede cambiar su decisión en cualquier momento desde esta página.
           </p>
+          <CookiePreferencesButton />
           <p className="mt-2">
             Si el usuario rechaza las cookies analíticas, la web seguirá funcionando con normalidad,
             aunque no se utilizarán mediciones no necesarias sujetas a consentimiento.
