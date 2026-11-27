@@ -17,6 +17,16 @@ export function disableGoogleAnalytics() {
   (window as AnalyticsWindow)[disabledKey] = true;
 }
 
+export function trackDemoRequest() {
+  const analytics = window as AnalyticsWindow;
+  if (analytics[disabledKey] !== false) return;
+
+  analytics.gtag?.('event', 'coforma_demo_request', {
+    send_to: measurementId,
+    page_location: new URL('/contacto', window.location.origin).href,
+  });
+}
+
 export default function GoogleAnalytics() {
   const pathname = usePathname();
   const query = useSearchParams();
