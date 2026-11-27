@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useRef, useState, type FormEvent } from 'react';
+import { trackDemoRequest } from './GoogleAnalytics';
 
 const inputClass = 'mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 focus-visible:outline-2 focus-visible:outline-emerald-700';
 const fields = [
@@ -40,9 +41,12 @@ export default function ContactForm() {
       setStatus('sent');
     } catch {
       setStatus('failed');
+      return;
     } finally {
       sending.current = false;
     }
+
+    trackDemoRequest();
   }
 
   return (
